@@ -2,12 +2,9 @@ import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import TemporaryDrawer from "../../components/menu_direct_drawer";
-import HorizontalLinearStepper from "../../components/stepper";
 import BasicModal from "../../components/modal";
 import CircularIndeterminate from "../../components/spinner";
 import Side_bar from "../../newcomp/side_bar";
-import TopLabel from "../../newcomp/top_label";
 import Top_select from "../../newcomp/select_que";
 
 
@@ -74,8 +71,8 @@ export default function Home() {
 
 
       //포스트 요청
-      const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
-
+      // const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
+      const response = await axios.post(`http://115.68.193.117:8000/net/upload_db?model_type=1`, formData);
       console.log("response",response);
 
 
@@ -85,7 +82,11 @@ export default function Home() {
       //리스폰스 반응
       if(response.data==="끝"){
           setIsLoading(false);          
-          router.push(`./data-check?data=${uploadFileName}`);
+
+          let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
+          cleanedString = cleanedString.replace(/ /g, '_');
+
+          router.push(`./data-check?data=${cleanedString}`);
       }
       // 리스폰스 fail
       else{
@@ -103,73 +104,23 @@ export default function Home() {
     }
   };
 
-
-//   테스트용 이벤트
-const handleUpload_test = async (model_number) => {
-    if (!selectedFile) {
-      return;
-    }
-
-    try {
-      console.log("전달모델: ",model_number);
-
-      // 스피너 on
-      setIsLoading(true);
-      
-      console.log("selectedFile",selectedFile);
-      console.log("selectedFile2",selectedFile2);
-
-
-      // post formdata 생성
-      const formData = new FormData();
-      formData.append('files', selectedFile);
-      console.log("formData1",formData);
-
-      formData.append('files', selectedFile2);
-      console.log("formData2",formData);
-
-
-      // 선택파일 이름저장
-      const uploadFileName = selectedFile.name;
-
-      //리스폰스 반응
-
-        setIsLoading(false);          
-        router.push(`./data-check?data=${uploadFileName}`);
-
-    } 
-    // 에러시에도 200 +error 표기로 캐치되지 않음
-    catch (error) {
-      console.error('Error uploading file:', error);
-      setIsLoading(false);
-      setHasError(true);
-
-    }
-  };
-  
   const MyCustomButton = (props) => {
     return <Button as="span" focusRipple={true} variant="contained" color="primary">{props.text}</Button>;
   };
 
-  const handledatanum = (selected) => {
-    // Ensure selectedOptions is an array
-
-    console.log("selecteddatanum",selected);
-}; 
-  
-
-  const activeStepVal = 0;
+  const i=0;
+  const page =1;
   return (
     //1번 프레임 
     <div id='outter_frame1'>
       {/* 왼쪽 바 */}
       <div id ='left_bar'>
-        <Side_bar/>
+        <Side_bar index={i}/>
       </div>
       {/* 2번 프레임 */}
       <div id='outter_frame2'>
           {/* <TopLabel activeStep={activeStepVal}/> */}
-          <Top_select/>
+          <Top_select method={handleUpload} page={page}/>
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
@@ -189,7 +140,7 @@ const handleUpload_test = async (model_number) => {
                       height: "100vh", // Adjust the height as needed
                     }}
                   >
-                    <p>분류 모델 진행중</p>
+                    <p>데이터 업로드중...</p>
                     <CircularIndeterminate />
                   </div>
                 </div>
@@ -237,7 +188,7 @@ const handleUpload_test = async (model_number) => {
                           <p>Selected File: {selectedFile.name}</p>
                           
                           {/* 1,2,3,4,5 파라미터 매개변수로 추가 */}
-                          <Button id='model_btn' onClick={() => handleUpload_test("kri-2-3-brand-model")}>테스트용버튼</Button>
+                          {/* <Button id='model_btn' onClick={() => handleUpload_test("kri-2-3-brand-model")}>테스트용버튼</Button>
 
                           <Button id='model_btn' onClick={() => handleUpload("kri-2-2-food-model")}>
                             식품
@@ -249,7 +200,7 @@ const handleUpload_test = async (model_number) => {
 
                           <Button id='model_btn' onClick={() => handleUpload("kri-2-3-brand-model")}>브랜드이미지/광고효과</Button>
                           <Button id='model_btn' onClick={() => handleUpload("kri-2-4-public-model")}>공공</Button>
-                          <Button id='model_btn' onClick={() => handleUpload("kri-2-5-service-model")}>마케팅서비스</Button>
+                          <Button id='model_btn' onClick={() => handleUpload("kri-2-5-service-model")}>마케팅서비스</Button> */}
                       </div>
                     ) : (
                       <p>설문 응답 파일을 드래그 하거나 파일을 선택해 주세요</p>

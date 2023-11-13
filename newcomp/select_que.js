@@ -10,8 +10,10 @@ import Button from '@mui/material/Button';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { pageExtensions } from '@/next.config';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-export default function Top_select() {
+export default function Top_select({method,method2,page,routed}) {
 
     const router = useRouter();    
 
@@ -24,6 +26,7 @@ export default function Top_select() {
 
 
     const [surveyOptions, setSurveyOptions] = useState([]);
+    const [selectfile ,setselectfile] = useState();
     const [selectedOptions, setSelectedOptions] = useState([cleanedString]);
     const [isSurveyOptionSelected, setIsSurveyOptionSelected] = useState(false);
 
@@ -31,6 +34,7 @@ export default function Top_select() {
     const [questionOptions, setQuestionOptions] = useState([]);
 
 
+        
     const handleSelectChange = (selected) => {
         const newSelectedOptions = Array.isArray(selected) ? selected : [selected];
         setSelectedOptions(newSelectedOptions);
@@ -52,12 +56,14 @@ export default function Top_select() {
                 label: option.Q_text,
               }));
               setQuestionOptions(questionOptions);
+              console.log("questionOptions",questionOptions);
             })
             .catch((error) => {
               console.error('Error fetching question options:', error);
             });
         }
     };
+
 
     const handleQuestionChange = (selected) => {
         const newSelectedOptions = Array.isArray(selected) ? selected : [selected];
@@ -68,58 +74,42 @@ export default function Top_select() {
     // API: Fetch survey options
     useEffect(() => {
     const surveyOptionsUrl = 'http://115.68.193.117:8000/net/file_list';
-    axios
-        .get(surveyOptionsUrl)
-        .then((response) => {
-        const surveyOptions = response.data.map((option) => ({
-            value: option.value,
-            label: option.label,
-        }));
-        setSurveyOptions(surveyOptions);
-        })
-        .catch((error) => {
-        console.error('Error fetching survey options:', error);
-        });
+        axios
+            .get(surveyOptionsUrl)
+            .then((response) => {
+            const surveyOptions = response.data.map((option) => ({
+                value: option.value,
+                label: option.label,
+            }));
+            setSurveyOptions(surveyOptions);
+            })
+            .catch((error) => {
+            console.error('Error fetching survey options:', error);
+            });
     }, []);
 
     const [datalocation, setdatalocation] = React.useState('mo');
     const handleChange = (event) => {
         setdatalocation(event.target.value);
     };
+    const handleChange2 = (event, value) => {
+        setselectfile(value);
+        console.log("선택된 파일:", value);
+
+        method2(value);
+    };
+      
+
     const location = ['db','mo'];
 
     const data = 'mo';
-    function upload_btn(){
 
-    }
-    const top100Films = [
-        { label: '우엉'},
-        { label: '부엉'},
-        { label: ''},
-        { label: ''},
-        { label: ''},
-        { label: ''},
-        { label: ''},
-    ];
+    const top100Films =  surveyOptions;
+
   return (
     //1번 프레임 
     <div>
-        {/* <div>
-            <div>
-                <div>
-                    <h2>설문 선택  현재 설문 : {selectedOptions}</h2>
-                    <Select_q placeholder_text="설문지를 선택해주세요" options={surveyOptions} onChange={handleSelectChange}/>
-                </div>
-            </div>
-            {isSurveyOptionSelected && (
-                <div>
-                    <div>
-                        <h2>질문 선택 Selected Option: {selectedQuestions} </h2>
-                        <Select_q placeholder_text="질문을 선택하세요" options={questionOptions} onChange={handleQuestionChange}/>
-                    </div>
-                </div>
-            )}  
-        </div> */}
+
 
         {/* 만드는중 */}        
         <div id ='sedi'>
@@ -140,35 +130,94 @@ export default function Top_select() {
             </div>
             <div id='sedi2'>
                 {datalocation === 'db' ? 
-                
                     <div>
-                        <Autocomplete
+                    {routed != undefined ? 
+                    // routed
+                    <Autocomplete
+                        key="unique-key-for-autocomplete"
                         disablePortal
                         id="combo-box-demo"
                         options={top100Films}
-                        sx={{ width: 1440 }}
+                        sx={{ width: 1340 }}
+                        onChange={(event, value) => handleChange2(event, value)}
+                        renderInput={(params) => <TextField {...params} label={routed} />}
+                    />
+                    :
+                    // not routed
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={top100Films}
+                        sx={{ width: 1340 }}
+                        onChange={(event, value) => handleChange2(event, value)}
                         renderInput={(params) => <TextField {...params} label="데이터를 검색하거나 선택하세요." />}
-                        />
+                    />
+                    }
                     </div>
-                    
                     : 
-                    
                     <div>
+                        {routed != undefined ? 
+                        // routed
                         <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={top100Films}
-                        sx={{ width: 1440 }}
-                        renderInput={(params) => <TextField {...params} label="데이터를 검색하거나 선택하세요." />}
+                            disablePortal
+                            id="combo-box-demo"
+                            options={top100Films}
+                            sx={{ width: 1340 }}
+                            onChange={(event, value) => handleChange2(event, value)}
+                            renderInput={(params) => <TextField {...params} label={routed} />}
                         />
+                        :
+                        // not routed
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={top100Films}
+                            sx={{ width: 1340 }}
+                            onChange={(event, value) => handleChange2(event, value)}
+                            renderInput={(params) => <TextField {...params} label="데이터를 검색하거나 선택하세요." />}
+                        />
+                        }
                     </div>
-                
                 }
+
             </div>
             <div>
-            <Button id='upload_btn' onClick={upload_btn()} endIcon={<FileUploadIcon />} size="large" focusRipple={true} variant="contained" color="primary">
-                데이터 업로드
-            </Button>
+
+                {/* 조건에 맞춰 버튼을 변경합시다 업로드, 모델실행 등 */}
+
+                {page === 1 ? (
+                    <Button id='upload_btn' onClick={method} endIcon={<FileUploadIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                        데이터 업로드
+                    </Button>
+                ) : page === 2 ? (
+                    <div id='modeldiv'>
+                        <FormControl fullWidth sx={{ m: 1, width: 140 }}>
+                            <InputLabel id="demo-simple-select-label">모델 선택</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={datalocation}
+                            label="Age"
+                            onChange={handleChange}
+                            >
+                                <MenuItem value={location[0]}>DB</MenuItem>
+                                <MenuItem value={location[1]}>재확인</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <Button id='model_run_btn' onClick={() => method(selectfile)} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                            모델 실행
+                        </Button>
+                    </div>
+                ) : page === 3 ? (
+                    <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                        모델 실행
+                    </Button>
+                ) : page === 4 ? (
+                    <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                        모델 실행
+                    </Button>
+                ) : null}
             </div>
         </div>
         {/* 만드는중 */}

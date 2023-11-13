@@ -90,15 +90,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-export default function MiniDrawer(i) {
-    if (i!=0 | i!=1 | i!=2 | i!=3){
-        i = 0;
-    }
+export default function MiniDrawer({index}) {
     
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-    const text = ['데이터 업로드', 'Row데이터 검수', '모델 데이터 확인', '데이터 시각화'];
-
+  const text = ['데이터 업로드', 'Row데이터 검수', '모델 데이터 확인', '데이터 시각화'];
+  const textfiled=text[index];
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -129,7 +126,7 @@ export default function MiniDrawer(i) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            {text[i]}
+            {textfiled}
           </Typography>
         </Toolbar>
       </AppBar>

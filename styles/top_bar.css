@@ -18,7 +18,7 @@
 
 /* 메인: 선택지 , 차트내용 등 */
 #main_frame{
-    padding-top:0px;
+    padding-top:45px;
 }
 
 #page_move{
@@ -47,7 +47,7 @@
 }
 
 #csvview{
-    margin-top:10px;
+    margin-top:60px;
 }
 
 
@@ -190,6 +190,7 @@ body{
 #left_bar{
     /* width:50px; */
     /* border:1px red solid; */
+    height:30px;
 }
 
 body > div {
@@ -200,12 +201,32 @@ body > div {
 /* select */
 #sedi{
     display:flex;
+    /* margin-top:20px; */
+    position:absolute;
+    top:80px;
+
 }
 #sedi2{
     width:80%;
     margin-top:8px;
 }
 #upload_btn{
-    margin-top:15px;
+    margin-top:9px;
     margin-left:20px;
+
+    width:180px;
+    height:53px;
+}
+
+
+
+#model_run_btn{
+    margin-top:9px;
+    margin-left:1px;
+    width:140px;
+    height:53px;
+}
+#modeldiv{
+    display:flex;
+    width:300px;
 }

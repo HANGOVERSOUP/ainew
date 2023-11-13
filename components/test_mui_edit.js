@@ -27,7 +27,7 @@ import {
 
 
 
-export default function FullFeaturedCrudGrid() {
+export default function FullFeaturedCrudGrid({file}) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -57,13 +57,15 @@ export default function FullFeaturedCrudGrid() {
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(file);
+  }, [file]);
 
-  const fetchData = async () => {
+  const fetchData = async (file) => {
     try {
+      const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
+      console.log("myurl,",myurl);
       // const myurl = `http://115.68.193.117:8000/net/file-json?filename=${file.data}`;
-      const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=LG_gram_data`;
+      // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=LG_gram_data`;
 
       const response = await axios.get(myurl);
       const responseData = response.data;
