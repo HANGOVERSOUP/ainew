@@ -1,0 +1,211 @@
+#outter_frame2{
+    padding:30px;
+}
+
+/* 바로가기 , 타이틀 */
+#title_frame{
+    display:flex;
+    flex-direction: row;
+
+}
+
+/* 타이틀 내용 */
+#title{
+    display: flex;
+    width: 100%;
+    margin-left:180px;
+}
+
+/* 메인: 선택지 , 차트내용 등 */
+#main_frame{
+    padding-top:0px;
+}
+
+#page_move{
+    /* border: 1px red solid; */
+    width:150px;
+}
+
+
+/* data-check 시각화 페이지 이동 */
+#next{
+    float: right;
+    margin-right:2px;
+}
+#csvview table {
+    width: auto;
+    table-layout: fixed;
+}
+
+#csvview table th, #csvview table td {
+    border: 1px solid #000;
+    word-wrap: break-word;
+}
+
+#goback{
+    margin-top:10px;
+}
+
+#csvview{
+    margin-top:10px;
+}
+
+
+
+
+/* dashboard */
+#option1_1{
+    width: 700px;
+}
+
+#option2{
+    width: 700px;
+}
+#sq{
+    font-size:30px;
+    margin-bottom: 0px;
+}
+#gen_chart{
+    margin-left:8px;
+}
+
+#chart_multi_pie{
+    width:35%;
+    height:300px;
+    display:inline-block;
+    margin-top:25px;
+
+}
+
+#chart_multi_bar{
+    position: absolute;
+    display: inline-block;
+    width:730px;
+    height: 100%;
+    margin-left:50px;
+    
+}
+
+
+#download_a {
+    margin-top:10px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#download_a>a{
+    margin-top: 20px;
+    background-color: rgba(237, 242, 247);
+    height: 34px;
+    width: 78px;
+    background-color: #EDF2F7;
+    outline: 2px solid transparent;
+    border-radius: 10%;
+    width: 220px;
+    height: 25px;
+    font-weight: var(--chakra-fontWeights-semibold);
+    text-align: center;
+    font-size: large;
+    margin-top:15px;
+    display: inline-block;
+
+}
+
+
+
+#option1{
+    display: flex;
+}
+#option1_2{
+    margin-left:30px;
+    display: flex;
+    align-items: flex-end;
+}
+#top_n{
+    height:65px;
+    width:260px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: aliceblue;
+    border-radius: 10%;
+}
+#pie_total{
+    position: relative;
+    top:20px;
+    margin-left:5px;
+}
+
+#chart_title{
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+
+
+/* datacheck */
+#csvbtn{
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+#select_num{
+    display:flex;
+}
+#csvtb{
+    margin-left:10px;
+}
+#move_to_dash{
+    margin-bottom:0px;
+}
+
+
+
+
+
+/* 새로짜는중 틀 */
+
+html {
+    height:100%;
+}
+
+body{
+    height:100%; 
+}
+
+
+#outter_frame1{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex-wrap: wrap;
+}
+#outter_frame2{
+    padding-top:0px;
+    margin-left:60px;
+    width:100%;
+    margin-top:0px;
+}
+
+#left_bar{
+    /* width:50px; */
+    /* border:1px red solid; */
+}
+
+body > div {
+    height:100%;
+}
+
+
+/* select */
+#sedi{
+    display:flex;
+}
+#sedi2{
+    width:80%;
+    margin-top:8px;
+}
+#upload_btn{
+    margin-top:15px;
+    margin-left:20px;
+}

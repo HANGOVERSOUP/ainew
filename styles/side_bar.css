@@ -1,0 +1,10 @@
+#side_1{
+    width:60px;
+    height:100%;
+    border:1px red solid;
+}
+
+#dra{
+    border:1px red solid !important;
+    text-align: center;
+}
