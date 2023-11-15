@@ -196,12 +196,13 @@ export default function Top_select({method,method2,page,routed}) {
                             <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={datalocation}
-                            label="Age"
-                            onChange={handleChange}
+                            // onChange={handleChange}
                             >
-                                <MenuItem value={location[0]}>DB</MenuItem>
-                                <MenuItem value={location[1]}>재확인</MenuItem>
+                                <MenuItem value='1'>식품</MenuItem>
+                                <MenuItem value='2'>전자</MenuItem>
+                                <MenuItem value='3'>브랜드이미지/광고효과</MenuItem>
+                                <MenuItem value='4'>공공</MenuItem>
+                                <MenuItem value='5'>마케팅서비스</MenuItem>
                             </Select>
                         </FormControl>
 

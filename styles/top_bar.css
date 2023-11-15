@@ -200,6 +200,7 @@ body > div {
 
 /* select */
 #sedi{
+    width: 90%;
     display:flex;
     /* margin-top:20px; */
     position:absolute;
@@ -207,7 +208,7 @@ body > div {
 
 }
 #sedi2{
-    width:80%;
+    /* width:80%; */
     margin-top:8px;
 }
 #upload_btn{
@@ -229,4 +230,48 @@ body > div {
 #modeldiv{
     display:flex;
     width:300px;
+}
+
+/* dashboard */
+.onlyflex{
+    display:flex
+}
+
+#csvview_model{
+    margin-top:140px;
+}
+#chart_make{
+
+    width:200px;
+    height:53px;
+    position:absolute;
+    right:150px;
+}
+#dash_options{
+    margin-top:8px;
+}
+#top_radio{
+    margin-left:37px;
+}
+#chart_contain{
+    /* margin-top:190px; */
+    width:100%;
+    height:100%;
+}
+#chart_bars{
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-top:165px;
+    margin-left:170px;
+}
+#chart_pie{
+    margin-top:135px;
+    margin-left:50px;
+
+}
+
+
+/* net edit page */
+#netspace{
+    margin-left:20px;
 }

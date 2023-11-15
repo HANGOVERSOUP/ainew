@@ -17,22 +17,17 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-  // randomCreatedDate,
-  // randomTraderName,
-  randomId,
-  // randomArrayItem,
-} from '@mui/x-data-grid-generator';
 
 
 
-
-export default function FullFeaturedCrudGrid({file}) {
+export default function FullFeaturedCrudGrid2({file}) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
   const [uploadrows,setuploadrows] = useState([]);
   const [apicolumns,setapicolumns]=useState();
+
+  
 
   function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -62,7 +57,9 @@ export default function FullFeaturedCrudGrid({file}) {
 
   const fetchData = async (file) => {
     try {
-      const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
+      // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
+      const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
+      
       console.log("myurl,",myurl);
       // const myurl = `http://115.68.193.117:8000/net/file-json?filename=${file.data}`;
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=LG_gram_data`;
@@ -78,7 +75,6 @@ export default function FullFeaturedCrudGrid({file}) {
 
           const columns = dataArray.length > 0 ? Object.keys(dataArray[0]) : [];
           setapicolumns(columns);
-          console.log("columns",columns[8]);
 
           setRows(dataArray);
         } else {
@@ -157,6 +153,7 @@ export default function FullFeaturedCrudGrid({file}) {
             valueOptions: ['긍정', '부정', '알수없음'],
           }
         : {}),
+
     }))
   : [];
 
@@ -209,7 +206,7 @@ export default function FullFeaturedCrudGrid({file}) {
   });
 
   return (
-    <div>
+    <div className='onlyflex'>
       <Box
         sx={{
           height: 700,

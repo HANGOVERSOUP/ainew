@@ -1,36 +1,18 @@
 import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import Button from '@mui/material/Button';
-import BasicModal from "../../components/modal";
-import CircularIndeterminate from "../../components/spinner";
 import Side_bar from "../../newcomp/side_bar";
 import Top_select from "../../newcomp/select_que";
 import FullFeaturedCrudGrid from "../../components/test_mui_edit";
 
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
-  const [dataArray, setdataArray] = useState([]);
-  const [columnNames, setColumnNames] = useState([]); // 동적 컬럼 이름
   const router = useRouter();
 
   if (router.query.data===undefined){
       router.query.data = "LG_gram_data"
   }
   const [receivedData,setreceivedData]=useState(router.query.data);
-  const [receivefilename, setreceivefilename] = useState(null);
-
-  // 테스트시
-  const [receivedData2 , setreceivedData2] =useState(receivedData);
-
-  const gotonext = async () => {
-      router.push(`./data-dashboard?data=${receivedData2}`);
-      // window.location.href = `./data-dashboard?data=${receivedData}`;
-  };
-
-  const goback=()=> {
-      router.push(`./data-upload?data=${receivedData2}`);
-  };
 
   // 모델실행버튼클릭이벤트
   const runmodel = async (selectfile) => {
@@ -45,7 +27,7 @@ export default function Home() {
     }
   };
 
-  const i=1;
+  const i=2;
   const page=2;
   return (
     //1번 프레임 

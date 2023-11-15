@@ -17,7 +17,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import NotesIcon from '@mui/icons-material/Notes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
@@ -94,7 +93,7 @@ export default function MiniDrawer({index}) {
     
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const text = ['데이터 업로드', 'Row데이터 검수', '모델 데이터 확인', '데이터 시각화'];
+  const text = ['데이터 업로드', 'Row데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','test'];
   const textfiled=text[index];
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,10 +103,14 @@ export default function MiniDrawer({index}) {
     setOpen(false);
   };
 
+  const url =['./data-upload?data=','./data-check?data=','./data-check?data=','./data-check?data='];
   function upload_click(index){
-
     console.log("indexa" , index);
+    console.log("url[index]" , url[index]);
+    // router.push(`${url[index]}+${cleanedString}`);
+    
   };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -159,8 +162,9 @@ export default function MiniDrawer({index}) {
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                   {index === 0 && <FileUploadIcon />}
                   {index === 1 && <SavedSearchIcon />}
-                  {index === 2 && <EditNoteIcon />}
-                  {index === 3 && <BarChartIcon />}
+                  {index === 2 && <SavedSearchIcon />}
+                  {index === 3 && <EditNoteIcon />}
+                  {index === 4 && <BarChartIcon />}
                   
 
                 </ListItemIcon>

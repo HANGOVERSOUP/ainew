@@ -17,13 +17,6 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-  // randomCreatedDate,
-  // randomTraderName,
-  randomId,
-  // randomArrayItem,
-} from '@mui/x-data-grid-generator';
-
 
 
 
@@ -33,6 +26,8 @@ export default function FullFeaturedCrudGrid({file}) {
 
   const [uploadrows,setuploadrows] = useState([]);
   const [apicolumns,setapicolumns]=useState();
+
+  const[net,setnet] = useState([]);
 
   function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -56,9 +51,6 @@ export default function FullFeaturedCrudGrid({file}) {
     );
   }
 
-  useEffect(() => {
-    fetchData(file);
-  }, [file]);
 
   const fetchData = async (file) => {
     try {
@@ -81,6 +73,7 @@ export default function FullFeaturedCrudGrid({file}) {
           console.log("columns",columns[8]);
 
           setRows(dataArray);
+
         } else {
           console.error('Received data is not an object:', parsedData);
         }
@@ -92,7 +85,35 @@ export default function FullFeaturedCrudGrid({file}) {
     }
   };
 
-  
+  const fetchData_net = async (file) => {
+    try {
+      // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
+      const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
+      
+      console.log("myurl,",myurl);
+      const response = await axios.get(myurl);
+      const responseData = response.data;
+      const netArray = [];
+      console.log("responseData",responseData);
+
+      const netData = JSON.parse(responseData);
+
+      for(const key in netData) {
+        const netValue = netData[key].NET;
+        netArray.push(netValue);
+      }
+      setnet(netArray);
+      console.log("net",net);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(file);
+    fetchData_net(file);
+  }, [file]);
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -145,7 +166,7 @@ export default function FullFeaturedCrudGrid({file}) {
     setRowModesModel(newRowModesModel);
   };
 
-  const columns = apicolumns
+  const columns = apicolumns 
   ? apicolumns.map((columnName, index) => ({
       field: columnName,
       headerName: columnName === 'id' ? 'ID' : columnName,
@@ -157,6 +178,14 @@ export default function FullFeaturedCrudGrid({file}) {
             valueOptions: ['긍정', '부정', '알수없음'],
           }
         : {}),
+      ...(columnName === 'NET'
+        ? {
+            type: 'singleSelect',
+            valueOptions: net,
+          }
+        : {}),
+
+      
     }))
   : [];
 
