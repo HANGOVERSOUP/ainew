@@ -20,7 +20,7 @@ import {
 
 
 
-export default function FullFeaturedCrudGrid2({file}) {
+export default function FullFeaturedCrudGrid2({file,  onDataReceived }) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -51,44 +51,51 @@ export default function FullFeaturedCrudGrid2({file}) {
     );
   }
 
-  useEffect(() => {
-    fetchData(file);
-  }, [file]);
+
 
   const fetchData = async (file) => {
     try {
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
-      const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
+      const myurl = `http://115.68.193.117:8888/net/net_info?p_id=1`;
       
-      console.log("myurl,",myurl);
+      console.log("onleynet_myurl,",myurl);
       // const myurl = `http://115.68.193.117:8000/net/file-json?filename=${file.data}`;
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=LG_gram_data`;
 
       const response = await axios.get(myurl);
       const responseData = response.data;
+      console.log("onleynet_responseData",responseData);
 
-      if (typeof responseData === 'string') {
-        const parsedData = JSON.parse(responseData);
+      const dataArray = Object.keys(responseData).map(key => responseData[key]);
 
-        if (typeof parsedData === 'object' && !Array.isArray(parsedData)) {
-          const dataArray = Object.keys(parsedData).map(key => parsedData[key]);
+      const columns = dataArray.length > 0 ? Object.keys(dataArray[0]) : [];
+      setapicolumns(columns);
 
-          const columns = dataArray.length > 0 ? Object.keys(dataArray[0]) : [];
-          setapicolumns(columns);
+      setRows(dataArray);
+      // if (typeof responseData === 'string') {
+      //   const parsedData = JSON.parse(responseData);
 
-          setRows(dataArray);
-        } else {
-          console.error('Received data is not an object:', parsedData);
-        }
-      } else {
-        console.error('Received data is not a string:', responseData);
-      }
+      //   if (typeof parsedData === 'object' && !Array.isArray(parsedData)) {
+      //     const dataArray = Object.keys(parsedData).map(key => parsedData[key]);
+
+      //     const columns = dataArray.length > 0 ? Object.keys(dataArray[0]) : [];
+      //     setapicolumns(columns);
+
+      //     setRows(dataArray);
+      //   } else {
+      //     console.error('Received data is not an object:', parsedData);
+      //   }
+      // } else {
+      //   console.error('Received data is not a string:', responseData);
+      // }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  
+  useEffect(() => {
+    fetchData(file);
+  }, [file]);
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -134,7 +141,37 @@ export default function FullFeaturedCrudGrid2({file}) {
     console.log("newRowaa",newRow);
     console.log("uploadrows",uploadrows);
     console.log("updatedRow",updatedRow);
+
+    const jsonRorororo = JSON.stringify(updatedRow);
+
+    editrow(jsonRorororo);
+    console.log("onlynet_jsonRorororo",jsonRorororo);
     return updatedRow;
+  };
+
+  // 오른쪽 NET 만 수정
+  const editrow = async (updatedRow) => {
+    try{
+      const formData = new FormData();
+      formData.append('item', updatedRow);
+
+      const response = await axios.post(`http://115.68.193.117:8888/net/net-change`, formData);
+
+      console.log("onlynet - editing - response",response);
+
+
+      fetchData(file);
+      sendDataToParent();
+    }catch (error) {
+      console.error('Error editing file:', error);
+    }
+
+
+  };
+
+  const sendDataToParent = () => {
+    const data = 'updated';
+    onDataReceived(data); // Calling the callback function from ParentComponent
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {

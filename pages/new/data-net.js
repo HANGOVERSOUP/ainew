@@ -28,6 +28,18 @@ export default function Home() {
     }
   };
 
+  const [dataFromChild, setDataFromChild] = useState('notupdated');
+
+  const handleDataFromChild = (data) => {
+    // Do something with the data received from ChildComponent
+    console.log('Data from Child:_이거 부모컴포넌트임', data);
+    setDataFromChild(data);
+  };
+
+  useEffect(() => {
+
+  }, [dataFromChild]);
+
   const i=5;
   const page=2;
   return (
@@ -58,9 +70,9 @@ export default function Home() {
                   )} */}
                   {csvstatus && (
                       <>
-                      <FullFeaturedCrudGrid file={receivedData}/>
+                      <FullFeaturedCrudGrid onDataReceived={dataFromChild} file={receivedData}/>
                       <div id='netspace'>
-                        <FullFeaturedCrudGrid2 file={receivedData}/>
+                        <FullFeaturedCrudGrid2 onDataReceived={setDataFromChild} file={receivedData}/>
                       </div>
                       </>
                   )}

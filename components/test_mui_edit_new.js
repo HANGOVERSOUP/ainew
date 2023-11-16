@@ -20,7 +20,7 @@ import {
 
 
 
-export default function FullFeaturedCrudGrid({file}) {
+export default function FullFeaturedCrudGrid({file,onDataReceived }) {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -28,6 +28,8 @@ export default function FullFeaturedCrudGrid({file}) {
   const [apicolumns,setapicolumns]=useState();
 
   const[net,setnet] = useState([]);
+
+  const [updatedDataReceived, setUpdatedDataReceived] = useState('notupdated');
 
   function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -52,6 +54,7 @@ export default function FullFeaturedCrudGrid({file}) {
   }
 
 
+  // 데이터 전체
   const fetchData = async (file) => {
     try {
       const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
@@ -70,10 +73,8 @@ export default function FullFeaturedCrudGrid({file}) {
 
           const columns = dataArray.length > 0 ? Object.keys(dataArray[0]) : [];
           setapicolumns(columns);
-          console.log("columns",columns[8]);
 
           setRows(dataArray);
-
         } else {
           console.error('Received data is not an object:', parsedData);
         }
@@ -85,35 +86,53 @@ export default function FullFeaturedCrudGrid({file}) {
     }
   };
 
+  // 왼쪽 NET 드롭다운 리스트 api 호출
   const fetchData_net = async (file) => {
     try {
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
-      const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
+      // const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
+      const myurl = 'http://115.68.193.117:8888/net/net_info?p_id=1';
       
       console.log("myurl,",myurl);
       const response = await axios.get(myurl);
       const responseData = response.data;
       const netArray = [];
-      console.log("responseData",responseData);
+      console.log("fetchData_net_responseData",responseData);
 
-      const netData = JSON.parse(responseData);
+      // const netData = JSON.parse(responseData);
+      const netData = responseData;
 
       for(const key in netData) {
-        const netValue = netData[key].NET;
+        const netValue = netData[key].net_text;
         netArray.push(netValue);
       }
+      console.log("netArray",netArray);
       setnet(netArray);
-      console.log("net",net);
 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+  // fetchData 데이터 전체 , fetchData_net NET 목록
+  // file 변동으로 useEffect 이나 실험 필요
   useEffect(() => {
     fetchData(file);
     fetchData_net(file);
   }, [file]);
+
+  useEffect(() => {
+    if(onDataReceived==='updated'){
+      fetchData(file);
+      fetchData_net(file);
+      console.log("onDataReceived_before",onDataReceived);
+      setUpdatedDataReceived('complete'); 
+      console.log("onDataReceived_after",onDataReceived);
+    }else{
+      console.log("onDataReceived_else",onDataReceived);
+    }
+  }, [onDataReceived]);
+
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -159,7 +178,34 @@ export default function FullFeaturedCrudGrid({file}) {
     console.log("newRowaa",newRow);
     console.log("uploadrows",uploadrows);
     console.log("updatedRow",updatedRow);
+
+
+    // const rorororo1 = {
+    //   IDKEY:updatedRow.IDKEY
+    //   ,
+  
+    // }
+
+    const jsonRorororo = JSON.stringify(updatedRow);
+
+    editrow(jsonRorororo);
+
     return updatedRow;
+  };
+
+  // 오른쪽 전체 수정사항 있는 로우를 매개변수로
+  // api 호출
+  const editrow = async (updatedRow) => {
+    try{
+      const formData = new FormData();
+      formData.append('item', updatedRow);
+
+      const response = await axios.post(`http://115.68.193.117:8888/net/test`, formData);
+
+      console.log("editing - response",response);
+    }catch (error) {
+      console.error('Error editing file:', error);
+    }
   };
 
   const handleRowModesModelChange = (newRowModesModel) => {
@@ -264,6 +310,10 @@ export default function FullFeaturedCrudGrid({file}) {
           }}
           slotProps={{
             toolbar: { setRows, setRowModesModel },
+          }}
+          onProcessRowUpdateError={(error) => {
+            console.error('Error updating row:', error);
+            // 추가적인 오류 처리 로직을 여기에 추가할 수 있습니다.
           }}
         />
       </Box>

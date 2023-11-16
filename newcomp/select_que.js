@@ -211,9 +211,14 @@ export default function Top_select({method,method2,page,routed}) {
                         </Button>
                     </div>
                 ) : page === 3 ? (
-                    <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
-                        모델 실행
-                    </Button>
+                    <div id='visual_btn_div'>
+                        <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                            시각화
+                        </Button>
+                        <Button id='visual_btn' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                            NET수정
+                        </Button>
+                    </div>
                 ) : page === 4 ? (
                     <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
                         모델 실행

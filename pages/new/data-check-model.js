@@ -28,7 +28,7 @@ export default function Home() {
   };
 
   const i=2;
-  const page=2;
+  const page=3;
   return (
     //1번 프레임 
     <div id='outter_frame1'>
@@ -43,7 +43,7 @@ export default function Home() {
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
-          <div id='main_frame'>
+          <div id='main_frame' className='visualize_div'>
             {/* <AuthCheck> */}
             <div>
               <div id='rec'>
@@ -51,7 +51,7 @@ export default function Home() {
               </div>
 
 
-              <div id='csvview'>
+              <div id='csvview' > 
                   {/* {csvstatus && (
                       <DynamicTable data={receivedData2}/>
                   )} */}

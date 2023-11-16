@@ -20,6 +20,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 
 const drawerWidth = 240;
 
@@ -93,7 +94,7 @@ export default function MiniDrawer({index}) {
     
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const text = ['데이터 업로드', 'Row데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','test'];
+  const text = ['데이터 업로드', 'Row데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','NET 수정'];
   const textfiled=text[index];
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -165,6 +166,7 @@ export default function MiniDrawer({index}) {
                   {index === 2 && <SavedSearchIcon />}
                   {index === 3 && <EditNoteIcon />}
                   {index === 4 && <BarChartIcon />}
+                  {index === 5 && <ModeEditOutlineIcon />}
                   
 
                 </ListItemIcon>

@@ -275,3 +275,15 @@ body > div {
 #netspace{
     margin-left:20px;
 }
+
+
+/* model */
+.visualize_div{
+margin-top:30px;
+}
+#visual_btn{
+    margin-top:4px;
+}
+#visual_btn_div{
+    margin-left:10px;
+}
