@@ -1,4 +1,3 @@
-
 import { Inter } from 'next/font/google'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -9,48 +8,106 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export default function Home() {
   const router = useRouter();
 
-  const bull = (
-    <Box
-      component="span"
-      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-      •
-    </Box>
-  );
-
-  function enter() {
-    router.push(`http://115.68.193.117:4000/new/data-dashboard`);
-
-  };
+  const pageurl = ["data-upload","data-check-raw","data-check-model","data-net","data-dashboard",];
+  const enter =  (page) => {
+    const url = `http://115.68.193.117:4000/new/${pageurl[page]}`;
+    router.push(url);
+  }
 
   return (
     <>
       <div>
-        <Card sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          {/* data-upload */}
           <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            홈페이지바로가기
-            </Typography>
+
             <Typography variant="h5" component="div">
-              홈페이지바로가기
+              data_upload
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            홈페이지바로가기
-            </Typography>
-            <Typography variant="body2">
               홈페이지바로가기
-              <br />
-              {'"홈페이지바로가기"'}
             </Typography>
+
+            <CardActions>
+              <Button onClick={() => enter(0)} size="small">들어가기</Button>
+            </CardActions>
           </CardContent>
-          <CardActions>
-            <Button onClick={enter} size="small">들어가기</Button>
-          </CardActions>
+        </Card>
+
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          {/* data-check-raw */}
+          <CardContent>
+
+            <Typography variant="h5" component="div">
+              data_check_raw
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              홈페이지바로가기
+            </Typography>
+
+
+            <CardActions>
+              <Button onClick={() => enter(1)} size="small">들어가기</Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          {/* data-check-model */}
+          <CardContent>
+
+            <Typography variant="h5" component="div">
+              data_check_model
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              홈페이지바로가기
+            </Typography>
+
+
+            <CardActions>
+              <Button onClick={() => enter(2)} size="small">들어가기</Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          {/* data-net */}
+          <CardContent>
+
+            <Typography variant="h5" component="div">
+              data_net
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              홈페이지바로가기
+            </Typography>
+
+            <CardActions>
+              <Button onClick={() => enter(3)} size="small">들어가기</Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
+          {/* data-dashboard */}
+          <CardContent>
+
+            <Typography variant="h5" component="div">
+              data_dashboard
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              홈페이지바로가기
+            </Typography>
+
+
+            <CardActions>
+              <Button onClick={() => enter(4)} size="small">들어가기</Button>
+            </CardActions>
+          </CardContent>
         </Card>
       </div>
     </>

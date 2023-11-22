@@ -114,7 +114,7 @@ export default function Top_select({method,method2,page,routed}) {
         <div id ='sedi'>
             <div id='sedi2'>
 
-                <div class='onlyflex'>
+                <div className='onlyflex'>
                     <Autocomplete
                         disablePortal
                         id="combo-box-demo"
@@ -139,7 +139,7 @@ export default function Top_select({method,method2,page,routed}) {
                     </div>
                </div>
                
-                <div id='dash_options' class='onlyflex'>
+                <div id='dash_options' className='onlyflex'>
                     {isSurveyOptionSelected && (
                         <Autocomplete
                             disablePortal

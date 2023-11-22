@@ -1,10 +1,10 @@
 import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import Side_bar from "../../newcomp/side_bar";
-import Top_select from "../../newcomp/select_que";
-import FullFeaturedCrudGrid2 from "../../newcomp/net_edit";
-import FullFeaturedCrudGrid from "../../components/test_mui_edit_new";
+import Side_bar from "../../newcomp/global_side_bar";
+import Top_select from "../../newcomp/global_select_que";
+import FullFeaturedCrudGrid2 from "../../newcomp/editnet_edit_onlynet";
+import FullFeaturedCrudGrid from "../../newcomp/editnet_edit_whole";
 
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);

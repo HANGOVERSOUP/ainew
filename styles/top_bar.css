@@ -265,8 +265,10 @@ body > div {
     margin-left:170px;
 }
 #chart_pie{
-    margin-top:135px;
+    margin-top:185px;
     margin-left:50px;
+
+    width:50%;
 
 }
 
@@ -286,4 +288,12 @@ margin-top:30px;
 }
 #visual_btn_div{
     margin-left:10px;
+}
+
+
+
+
+/*  */
+.redborder{
+    border:1px red solid;
 }

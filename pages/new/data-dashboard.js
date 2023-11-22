@@ -1,10 +1,13 @@
 import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import Side_bar from "../../newcomp/side_bar";
-import Top_select from "../../newcomp/select_que_dash";
+import Side_bar from "../../newcomp/global_side_bar";
+import Top_select from "../../newcomp/global_select_que_dash";
 import BarChart from '../../components/bar-chart';
-import PieChart from '../../components/pie-chart';
+
+import PieAnimation from "../../newcomp/chart_pie";
+import CombinedChart from "../../newcomp/chart_bar_line";
+
 
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
@@ -33,7 +36,6 @@ export default function Home() {
 
   useEffect(() => {
     mkchart();
-    mkchart_pie();
   }, []);
 
   function genchart(){
@@ -48,12 +50,12 @@ export default function Home() {
     // const chartDataUrlNeg = `http://115.68.193.117:8000/net/simple-graph?filename=${receivedData}&Q_code=B5-2&graph_type=sample&emotion=부정&top_n=10`;
     const chartDataUrlNeg = 'http://115.68.193.117:8000/net/simple-graph?filename=LG_gram_data&Q_code=BQ101_1&graph_type=sample&emotion=부정&top_n=10';
     
-    console.log("chartDataUrlPos",chartDataUrlPos);
+    // console.log("chartDataUrlPos",chartDataUrlPos);
     try {
         const responsePos = await axios.get(chartDataUrlPos);
 
-        console.log("responsePos",responsePos);
-        console.log("responsePos.data.datasets[0].data",responsePos.data.datasets[0].data);
+        // console.log("responsePos",responsePos);
+        // console.log("responsePos.data.datasets[0].data",responsePos.data.datasets[0].data);
 
         const posdata={
             labels : responsePos.data.labels,
@@ -86,8 +88,8 @@ export default function Home() {
 
 
         const responseNeg = await axios.get(chartDataUrlNeg);
-        console.log("responseNeg",responseNeg);
-        console.log("responseNeg.data.datasets[0].data",responseNeg.data.datasets[0].data);
+        // console.log("responseNeg",responseNeg);
+        // console.log("responseNeg.data.datasets[0].data",responseNeg.data.datasets[0].data);
 
         const negdata={
             labels : responseNeg.data.labels,
@@ -121,25 +123,6 @@ export default function Home() {
     }    
   };
 
-  const mkchart_pie = async () => {
-
-    setChartData(null);
-    // const chartDataUrl = `http://115.68.193.117:8000/net/simple-graph?filename=${selectedOptions}&Q_code=${selectedQuestions}&graph_type=pie&top_n=${selectedValue_top}`;
-    const chartDataUrl = `http://115.68.193.117:8000/net/simple-graph?filename=LG_gram_data&Q_code=BQ101_1&graph_type=pie&top_n=10`;
-    console.log("chartDataUrl",chartDataUrl);
-    try {
-        const response = await axios.get(chartDataUrl);
-        const chartDataJson = response.data.chartdata; 
-        setChartData(chartDataJson);
-        // setpietotal(response.data.total);
-
-    } catch (error) {
-        console.error('Error fetching chart data:', error);
-        setChartData(null);
-    }
-
-  };
-
     const renderChart_pos = () => {
         // 데이터가 유효한 경우에만 차트 렌더링
         if (poschart && poschart.datasets && poschart.datasets.length > 0) {
@@ -154,16 +137,6 @@ export default function Home() {
       if (negchart && negchart.datasets && negchart.datasets.length > 0) {
 
         return <BarChart data={negchart} height={340} title={'부정'} /> ;
-
-      } else {
-      }
-    };
-    const renderChart_pie = () => {
-      // 데이터가 유효한 경우에만 차트 렌더링
-      if (chartData && chartData.datasets && chartData.datasets.length > 0) {
-
-        return <PieChart data={chartData} height={400}/>;
-        // pietotal={pietotal}
 
       } else {
       }
@@ -189,13 +162,16 @@ export default function Home() {
           <div id='main_frame'>
             {/* <AuthCheck> */}
             <div className='onlyflex' id='chart_contain'>
-                <div id='chart_pie'>
-                  {renderChart_pie()}
+            
+                <div id='chart_pie' className=''>
+                  <PieAnimation/>                  
                 </div>
 
                 <div id='chart_bars'>
-                  {renderChart_pos()}
-                  {renderChart_neg()}
+                <CombinedChart/>
+
+                  {/* {renderChart_pos()}
+                  {renderChart_neg()} */}
                 </div>
 
 

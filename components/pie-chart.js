@@ -6,6 +6,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels"
 
 const PieChart = ({ data, pietotal, title,width, height }) => {
 
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -40,7 +41,7 @@ const PieChart = ({ data, pietotal, title,width, height }) => {
 
   return (
     <div>
-      <div style={{ width: `${width}px`, height: `${height}px` }}>
+      <div id='pie_back' style={{ width: `${width}px`, height: `${height}px` }}>
         <div id='pie_total'>Total = {pietotal}</div>
         <Pie data={data} options={options}/>
         

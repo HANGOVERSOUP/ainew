@@ -2,10 +2,10 @@ import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import BasicModal from "../../components/modal";
-import CircularIndeterminate from "../../components/spinner";
-import Side_bar from "../../newcomp/side_bar";
-import Top_select from "../../newcomp/select_que";
+import BasicModal from "../../newcomp/global_modal";
+import CircularIndeterminate from "../../newcomp/global_spinner";
+import Side_bar from "../../newcomp/global_side_bar";
+import Top_select from "../../newcomp/global_select_que";
 
 
 export default function Home() {
@@ -46,62 +46,59 @@ export default function Home() {
     };
   // 업로드 이벤트
     const handleUpload = async (model_number) => {
-    if (!selectedFile) {
-      return;
-    }
-
-    try {
-    
-      console.log("전달모델: ",model_number);
-
-      // 스피너 on
-      setIsLoading(true);
-      
-      console.log("selectedFile",selectedFile);
-      console.log("selectedFile2",selectedFile2);
-
-
-      // post formdata 생성
-      const formData = new FormData();
-      formData.append('files', selectedFile);
-      console.log("formData1",formData);
-
-      formData.append('files', selectedFile2);
-      console.log("formData2",formData);
-
-
-      //포스트 요청
-      // const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
-      const response = await axios.post(`http://115.68.193.117:8000/net/upload_db?model_type=1`, formData);
-      console.log("response",response);
-
-
-      // 선택파일 이름저장
-      const uploadFileName = selectedFile.name;
-
-      //리스폰스 반응
-      if(response.data==="끝"){
-          setIsLoading(false);          
-
-          let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
-          cleanedString = cleanedString.replace(/ /g, '_');
-
-          router.push(`./data-check?data=${cleanedString}`);
+      if (!selectedFile) {
+        return;
       }
-      // 리스폰스 fail
-      else{
+      try {
+      
+        console.log("전달모델: ",model_number);
+
+        // 스피너 on
+        setIsLoading(true);
+        
+        console.log("selectedFile",selectedFile);
+        console.log("selectedFile2",selectedFile2);
+
+
+        // post formdata 생성
+        const formData = new FormData();
+        formData.append('files', selectedFile);
+        console.log("formData1",formData);
+
+        formData.append('files', selectedFile2);
+        console.log("formData2",formData);
+
+
+        //포스트 요청
+        // const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
+        const response = await axios.post(`http://115.68.193.117:9999/net/upload_file`, formData);
+        console.log("response",response);
+
+
+        // 선택파일 이름저장
+        const uploadFileName = selectedFile.name;
+
+        //리스폰스 반응
+        if(response.data==="끝"){
+            setIsLoading(false);          
+
+            let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
+            cleanedString = cleanedString.replace(/ /g, '_');
+
+            // router.push(`./data-check?data=${cleanedString}`);
+        }
+        // 리스폰스 fail
+        else{
+          setIsLoading(false);
+          setHasError(true);
+        }
+      } 
+      // 에러시에도 200 +error 표기로 캐치되지 않음
+      catch (error) {
+        console.error('Error uploading file:', error);
         setIsLoading(false);
         setHasError(true);
-
       }
-    } 
-    // 에러시에도 200 +error 표기로 캐치되지 않음
-    catch (error) {
-      console.error('Error uploading file:', error);
-      setIsLoading(false);
-      setHasError(true);
-
-    }
   };
 
   const MyCustomButton = (props) => {

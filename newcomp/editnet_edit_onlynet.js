@@ -18,7 +18,10 @@ import {
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
 
-
+// 
+// net 수정페이지 --> 오른쪽 net만테이블 컴포넌트
+// 
+// 
 
 export default function FullFeaturedCrudGrid2({file,  onDataReceived }) {
   const [rows, setRows] = useState([]);
@@ -55,8 +58,9 @@ export default function FullFeaturedCrudGrid2({file,  onDataReceived }) {
 
   const fetchData = async (file) => {
     try {
+      console.log("fetch!!");
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
-      const myurl = `http://115.68.193.117:8888/net/net_info?p_id=1`;
+      const myurl = `http://115.68.193.117:9999/net/net_info?p_name=2302019_A_%282023-11-03%29`;
       
       console.log("onleynet_myurl,",myurl);
       // const myurl = `http://115.68.193.117:8000/net/file-json?filename=${file.data}`;
@@ -155,11 +159,12 @@ export default function FullFeaturedCrudGrid2({file,  onDataReceived }) {
       const formData = new FormData();
       formData.append('item', updatedRow);
 
-      const response = await axios.post(`http://115.68.193.117:8888/net/net-change`, formData);
+      const response = await axios.post(`http://115.68.193.117:9999/net/net-change`, formData);
 
       console.log("onlynet - editing - response",response);
 
 
+      console.log("before fetch!");
       fetchData(file);
       sendDataToParent();
     }catch (error) {
@@ -170,6 +175,7 @@ export default function FullFeaturedCrudGrid2({file,  onDataReceived }) {
   };
 
   const sendDataToParent = () => {
+    console.log("sendDataToParent!! 보냄!");
     const data = 'updated';
     onDataReceived(data); // Calling the callback function from ParentComponent
   };
