@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
-import FullFeaturedCrudGrid from "../../newcomp/editnet_edit_whole";
+import FullFeaturedCrudGrid from "../../newcomp/editraw_edit";
+// import FullFeaturedCrudGrid from "../../components/test_mui_edit";
 
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);

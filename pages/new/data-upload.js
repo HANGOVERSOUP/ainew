@@ -72,7 +72,7 @@ export default function Home() {
         //포스트 요청
         // const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
         const response = await axios.post(`http://115.68.193.117:9999/net/upload_file`, formData);
-        console.log("response",response);
+        console.log("response",response.data);
 
 
         // 선택파일 이름저장
@@ -80,7 +80,10 @@ export default function Home() {
 
         //리스폰스 반응
         if(response.data==="끝"){
-            setIsLoading(false);          
+            //스핀
+            setIsLoading(false); 
+            //모달  
+            setHasError(false);
 
             let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
             cleanedString = cleanedString.replace(/ /g, '_');
