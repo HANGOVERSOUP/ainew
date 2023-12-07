@@ -15,7 +15,8 @@ export default function Home() {
 
   const pageurl = ["data-upload","data-check-raw","data-check-model","data-net","data-dashboard",];
   const enter =  (page) => {
-    const url = `http://115.68.193.117:4000/new/${pageurl[page]}`;
+    // const url = `http://115.68.193.117:4000/new/${pageurl[page]}`;
+    const url = `./${pageurl[page]}`;
     router.push(url);
   }
 
