@@ -108,6 +108,9 @@ export default function Home() {
     // 
   };
 
+  function notworking(){
+    console.log("workingon");
+  }
   const i=0;
   const page =1;
   return (
@@ -120,7 +123,7 @@ export default function Home() {
       {/* 2번 프레임 */}
       <div id='outter_frame2'>
           {/* <TopLabel activeStep={activeStepVal}/> */}
-          <Top_select method={handleUpload} page={page}/>
+          <Top_select method={handleUpload} method2={notworking} page={page}/>
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
