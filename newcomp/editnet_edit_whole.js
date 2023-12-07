@@ -23,7 +23,9 @@ import {
 // 
 // 
 
-export default function FullFeaturedCrudGrid({file,onDataReceived }) {
+export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
+  // console.log("editnet_wholefile",file);
+  // console.log("editnet_wholefileq",fileque);
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -59,12 +61,15 @@ export default function FullFeaturedCrudGrid({file,onDataReceived }) {
 
 
   // 데이터 전체
-  const fetchData = async (file) => {
+  const fetchData = async () => {
     try {
-      // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
-      // const myurl = `http://115.68.193.117:9999/net/data-check?p_name=${file}`;
-      const myurl = `http://115.68.193.117:9999/net/data-check?p_name=2302019_A_(2023-11-03)`; 
-      console.log("myurl,",myurl);
+      const params = {
+        question: fileque
+      };
+      const queryString = new URLSearchParams(params).toString();
+      const myurl = `http://115.68.193.117:9999/net/data-check?p_name=${file}&${queryString}`;
+      console.log("edit_whole_myurl,",myurl);
+      console.log("edit_whole_queryString,",queryString);
 
       const response = await axios.get(myurl);
       const responseData = response.data;
@@ -91,11 +96,11 @@ export default function FullFeaturedCrudGrid({file,onDataReceived }) {
   };
 
   // 왼쪽 NET 드롭다운 리스트 api 호출
-  const fetchData_net = async (file) => {
+  const fetchData_net = async () => {
     try {
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
       // const myurl = `http://115.68.193.117:8000/net/net-t?filename=LG_gram_data`;
-      const myurl = 'http://115.68.193.117:9999/net/net_info?p_name=2302019_A_%282023-11-03%29';
+      const myurl = `http://115.68.193.117:9999/net/net_info?p_name=${file}`;
       
       console.log("myurl,",myurl);
       const response = await axios.get(myurl);
@@ -121,9 +126,9 @@ export default function FullFeaturedCrudGrid({file,onDataReceived }) {
   // fetchData 데이터 전체 , fetchData_net NET 목록
   // file 변동으로 useEffect 이나 실험 필요
   useEffect(() => {
-    fetchData(file);
-    fetchData_net(file);
-  }, [file]);
+    fetchData();
+    fetchData_net();
+  }, [file,fileque]);
 
   useEffect(() => {
     if(onDataReceived==='updated'){
@@ -225,7 +230,7 @@ export default function FullFeaturedCrudGrid({file,onDataReceived }) {
   ? apicolumns.map((columnName, index) => ({
       field: columnName,
       headerName: columnName === 'id' ? 'ID' : columnName,
-      width: columnName === 'id' ? 70 : 180 && columnName === 'question_text' ? 310 : 180 ,
+      width: columnName === 'id' ? 350: 180 && columnName === 'question_text' ? 310 : 180 ,
       editable: true,
       ...(columnName === 'emotion'
         ? {
@@ -282,12 +287,12 @@ export default function FullFeaturedCrudGrid({file,onDataReceived }) {
           onClick={handleEditClick(id)}
           color="inherit"
         />,
-        <GridActionsCellItem
-          icon={<DeleteIcon />}
-          label="Delete"
-          onClick={handleDeleteClick(id)}
-          color="inherit"
-        />,
+        // <GridActionsCellItem
+        //   icon={<DeleteIcon />}
+        //   label="Delete"
+        //   onClick={handleDeleteClick(id)}
+        //   color="inherit"
+        // />,
       ];
     },
   });

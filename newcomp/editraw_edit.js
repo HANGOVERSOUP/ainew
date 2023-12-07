@@ -27,7 +27,9 @@ import {
 
 
 
-export default function FullFeaturedCrudGrid({file}) {
+export default function FullFeaturedCrudGrid({file ,fileque}) {
+  console.log("editraw_edit_file",file);
+  console.log("editraw_edit_fileque",fileque);
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -57,19 +59,20 @@ export default function FullFeaturedCrudGrid({file}) {
   }
 
   useEffect(() => {
-    fetchData(file);
-  }, [file]);
+    fetchData(file,fileque);
+  }, [file,fileque]);
 
   const fetchData = async (file) => {
+    console.log("editraw_edit_filefile",file);
     try {
       const params = {
-        p_name: 'koreanaaaaaaa',
-        question_text: '두 편의 광고 중[#Q8#]를 더 선호하는 이유는 무엇입니까?'
+        p_name: file,
+        question_text: fileque
       };
       const queryString = new URLSearchParams(params).toString();
       const myurl = `http://115.68.193.117:9999/net/raw_data/send?${queryString}`;
 
-      console.log("myurl,",myurl);
+      console.log("editraw_edit_ myurl,",myurl);
 
       const response = await axios.get(myurl);
       const responseData = response.data;
@@ -201,7 +204,7 @@ export default function FullFeaturedCrudGrid({file}) {
     field: 'actions',
     type: 'actions',
     headerName: 'Actions',
-    width: 100,
+    width: 99,
     cellClassName: 'actions',
     getActions: ({ id }) => {
       const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -248,8 +251,8 @@ export default function FullFeaturedCrudGrid({file}) {
     <div>
       <Box
         sx={{
-          height: 700,
-          width: '100%',
+          height: 660,
+          width: '99%',
           '& .actions': {
             color: 'text.secondary',
           },

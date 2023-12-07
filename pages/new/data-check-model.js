@@ -3,27 +3,50 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
-import FullFeaturedCrudGrid from "../../newcomp/editnet_edit_whole";
+import FullFeaturedCrudGrid from "../../newcomp/editmode_edit";
 
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
   const router = useRouter();
 
   if (router.query.data===undefined){
-      router.query.data = "LG_gram_data"
+      router.query.data = ""
   }
-  const [receivedData,setreceivedData]=useState(router.query.data);
+  const [receivedData,setreceivedData]=useState(router.query.p_name);
+  const [receivedDataque,setreceivedDataque]=useState(router.query.question);
 
-  // 모델실행버튼클릭이벤트
-  const runmodel = async (selectfile) => {
-    console.log("selectfilaaae",selectfile);
+  // 시각화버튼
+  const runmodel = async () => {
+
+    console.log("selectfilaaae",receivedData);
+    console.log("selectq",receivedDataque);
+
+    const params = {
+      question: receivedDataque,   
+    };
+    const queryString = new URLSearchParams(params).toString();
+    console.log("queryString",queryString);
+    router.push(`./data-dashboard?p_name=${receivedData}&question=${queryString}`);
+  };
+  // net수정버튼
+  const runmodel2 = async () => {
+
+    console.log("selectfilaaae",receivedData);
+    console.log("selectq",receivedDataque);
+
+    const queryString = encodeURIComponent(receivedDataque);
+    // const queryString = new URLSearchParams(params).toString();
+    console.log("queryString",queryString);
+    router.push(`./data-net?p_name=${receivedData}&question=${queryString}`);
   };
 
   // 파일명변동이벤트
-  const filechanged = async (selectfile) => {
+  const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동",selectfile.value);
-      setreceivedData(selectfile.value);
+      console.log("변동1",selectfile);
+      console.log("변동2",selectque);      
+      setreceivedData(selectfile);
+      setreceivedDataque(selectque);
     }
   };
 
@@ -39,7 +62,7 @@ export default function Home() {
       {/* 2번 프레임 */}
       <div id='outter_frame2'>
           {/* <TopLabel activeStep={activeStepVal}/> */}
-          <Top_select method2={filechanged} method={runmodel} page={page} routed={receivedData}/>
+          <Top_select method2={filechanged} method={runmodel} method3={runmodel2} page={page} routed={receivedData}/>
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
@@ -51,12 +74,12 @@ export default function Home() {
               </div>
 
 
-              <div id='csvview' > 
+              <div id='csvview2' > 
                   {/* {csvstatus && (
                       <DynamicTable data={receivedData2}/>
                   )} */}
                   {csvstatus && (
-                      <FullFeaturedCrudGrid file={receivedData}/>
+                      <FullFeaturedCrudGrid file={receivedData} fileque={receivedDataque}/>
                   )}
               </div>
             </div>

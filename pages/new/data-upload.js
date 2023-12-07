@@ -7,7 +7,6 @@ import CircularIndeterminate from "../../newcomp/global_spinner";
 import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
 
-
 export default function Home() {
     const router = useRouter();
     const [hasError, setHasError] = useState(false);
@@ -44,15 +43,15 @@ export default function Home() {
         setSelectedFile2(file2);
       }
     };
-  // 업로드 이벤트
-    const handleUpload = async (model_number) => {
+
+    
+    // 업로드 이벤트
+    const handleUpload = async (filename) => {
+      console.log("filename",filename);
       if (!selectedFile) {
         return;
       }
       try {
-      
-        console.log("전달모델: ",model_number);
-
         // 스피너 on
         setIsLoading(true);
         
@@ -88,7 +87,7 @@ export default function Home() {
             let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
             cleanedString = cleanedString.replace(/ /g, '_');
 
-            // router.push(`./data-check?data=${cleanedString}`);
+            router.push(`./data-check-raw?data=${cleanedString}`);
         }
         // 리스폰스 fail
         else{
@@ -105,7 +104,8 @@ export default function Home() {
   };
 
   const MyCustomButton = (props) => {
-    return <Button as="span" focusRipple={true} variant="contained" color="primary">{props.text}</Button>;
+    return <Button as="span"  variant="contained" focusRipple={true} color="primary">{props.text}</Button>;
+    // 
   };
 
   const i=0;

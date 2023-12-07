@@ -1,147 +1,34 @@
 import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que_dash";
-import BarChart from '../../components/bar-chart';
-
 import PieAnimation from "../../newcomp/chart_pie";
 import CombinedChart from "../../newcomp/chart_bar_line";
-
+import axios from 'axios';
+import { BedRounded } from '@mui/icons-material';
 
 export default function Home() {
-  const [csvstatus, setCsvStatus] = useState(true);
-  const [poschart,setposchart] = useState();
-  const [negchart,setnegchart] = useState();
-  const [chartData,setChartData] = useState();
   const router = useRouter();
 
-  if (router.query.data===undefined){
-      router.query.data = "LG_gram_data"
-  }
-  const [receivedData,setreceivedData]=useState(router.query.data);
-
-  // 모델실행버튼클릭이벤트
-  const runmodel = async (selectfile) => {
-    console.log("selectfilaaae",selectfile);
-  };
-
+  // if (router.query.data===undefined){
+  //     router.query.data = "test1"
+  // }
+  const [receivedData,setreceivedData]=useState(router.query.p_name);
+  const [receivedDataque,setreceivedDataque]=useState(router.query.question);
+  const [good,setgood]=useState("bad");
+  console.log("dash_router.query",router.query);
+  console.log("dash_router.query.data",receivedData);
+  console.log("dash_router.query.question",receivedDataque);
   // 파일명변동이벤트
-  const filechanged = async (selectfile) => {
+  const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동",selectfile.value);
-      setreceivedData(selectfile.value);
+      console.log("dash_변동1",selectfile);
+      console.log("dash_변동2",selectque);
+      setreceivedData(selectfile);
+      setreceivedDataque(selectque);
+      setgood("good");
     }
-  };
-
-  useEffect(() => {
-    mkchart();
-  }, []);
-
-  function genchart(){
-    mkchart();
-    // mkchart_pie();
-  }
-  const mkchart = async () => {
-    // const chartDataUrlPos = `http://115.68.193.117:8000/net/simple-graph?filename=${selectedOptions}&Q_code=${selectedQuestions}&graph_type=sample&emotion=긍정&top_n=${selectedValue_top}`;
-    // const chartDataUrlNeg = `http://115.68.193.117:8000/net/simple-graph?filename=${selectedOptions}&Q_code=${selectedQuestions}&graph_type=sample&emotion=부정&top_n=${selectedValue_top}`;
-    // const chartDataUrlPos = `http://115.68.193.117:8000/net/simple-graph?filename=${receivedData}&Q_code=B5-2&graph_type=sample&emotion=긍정&top_n=10`;
-    const chartDataUrlPos = 'http://115.68.193.117:8000/net/simple-graph?filename=LG_gram_data&Q_code=BQ101_1&graph_type=sample&emotion=긍정&top_n=10';
-    // const chartDataUrlNeg = `http://115.68.193.117:8000/net/simple-graph?filename=${receivedData}&Q_code=B5-2&graph_type=sample&emotion=부정&top_n=10`;
-    const chartDataUrlNeg = 'http://115.68.193.117:8000/net/simple-graph?filename=LG_gram_data&Q_code=BQ101_1&graph_type=sample&emotion=부정&top_n=10';
-    
-    // console.log("chartDataUrlPos",chartDataUrlPos);
-    try {
-        const responsePos = await axios.get(chartDataUrlPos);
-
-        // console.log("responsePos",responsePos);
-        // console.log("responsePos.data.datasets[0].data",responsePos.data.datasets[0].data);
-
-        const posdata={
-            labels : responsePos.data.labels,
-            datasets: [
-                {
-                    type : 'line',
-                    label :'percent',
-                    // borderColor: 'rgba(75, 192, 192, 1)',
-                    borderColor:'#00000',
-                    // backgroundColor:'#00000',
-                    borderWidth: 0.5,
-                    // fill: true,
-                    data: responsePos.data.datasets[0].data,
-                    datalabels:{
-                        display:false,
-                    }
-                },
-                {
-                    type : 'bar',
-                    label :'count',
-                    borderColor: 'white',
-                    borderWidth: 2,
-                    backgroundColor: 'rgba(121,173,210, 0.7)',
-                    data: responsePos.data.datasets[1].data,
-                }
-            ]
-        }
-        setposchart(posdata);
-
-
-
-        const responseNeg = await axios.get(chartDataUrlNeg);
-        // console.log("responseNeg",responseNeg);
-        // console.log("responseNeg.data.datasets[0].data",responseNeg.data.datasets[0].data);
-
-        const negdata={
-            labels : responseNeg.data.labels,
-            datasets: [
-                {
-                    type : 'line',
-                    label :'percent',
-                    borderColor:'#00000',
-                    borderWidth: 0.5,
-                    fill: false,
-                    data: responseNeg.data.datasets[0].data,
-                    datalabels:{
-                        display:false,
-                    }
-                },
-                {
-                    type : 'bar',
-                    label :'count',
-                    borderColor: 'white',
-                    borderWidth: 2,
-                    backgroundColor:  "#F78181" ,
-                    data: responseNeg.data.datasets[1].data,
-                }
-            ]
-        }
-        setnegchart(negdata);
-
-    } catch (error) {
-        // console.error('Error fetching chart data:', error);
-        // setChartData2(null);
-    }    
-  };
-
-    const renderChart_pos = () => {
-        // 데이터가 유효한 경우에만 차트 렌더링
-        if (poschart && poschart.datasets && poschart.datasets.length > 0) {
-
-          return <BarChart data={poschart} height={340} title={'긍정'} /> ;
-
-        } else {
-        }
-    };
-    const renderChart_neg = () => {
-      // 데이터가 유효한 경우에만 차트 렌더링
-      if (negchart && negchart.datasets && negchart.datasets.length > 0) {
-
-        return <BarChart data={negchart} height={340} title={'부정'} /> ;
-
-      } else {
-      }
-    };
-
+  };                           
 
   const i=4;
   const page=2;
@@ -155,26 +42,25 @@ export default function Home() {
       {/* 2번 프레임 */}
       <div id='outter_frame2'>
           {/* <TopLabel activeStep={activeStepVal}/> */}
-          <Top_select method2={filechanged} method={genchart} page={page} routed={receivedData}/>
+          <Top_select method2={filechanged} page={page} routed_p={receivedData} routed_q={receivedDataque}/>
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame'>
             {/* <AuthCheck> */}
             <div className='onlyflex' id='chart_contain'>
+            {good ==="good" &&(
+            <>
             
-                <div id='chart_pie' className=''>
-                  <PieAnimation/>                  
-                </div>
+              <div id='chart_pie' className=''>
+                <PieAnimation file={receivedData} fileque={receivedDataque}/>                  
+              </div>
 
-                <div id='chart_bars'>
-                <CombinedChart/>
-
-                  {/* {renderChart_pos()}
-                  {renderChart_neg()} */}
-                </div>
-
-
+              <div id='chart_bars'>
+                <CombinedChart file={receivedData} fileque={receivedDataque}/>
+              </div>
+              </>
+            )}
             </div>
             {/* </AuthCheck> */}
             {/* 메인: 선택지 , 차트내용 등 */}              

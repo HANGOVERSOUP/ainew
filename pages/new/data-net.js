@@ -10,21 +10,27 @@ export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
   const router = useRouter();
 
-  if (router.query.data===undefined){
-      router.query.data = "LG_gram_data"
-  }
-  const [receivedData,setreceivedData]=useState(router.query.data);
-
+  // if (router.query.data===undefined){
+  //     router.query.data = "LG_gram_data"
+  // }
+  const [receivedData,setreceivedData]=useState(router.query.p_name);
+  const [receivedDataque,setreceivedDataque]=useState(router.query.question);
+  console.log("data-net-recie_sssssssss",router.query);
+  console.log("data-net-recie_p",receivedData);
+  console.log("data-net-recie_q",receivedDataque);
   // 모델실행버튼클릭이벤트
   const runmodel = async (selectfile) => {
     console.log("selectfilaaae",selectfile);
   };
 
+
   // 파일명변동이벤트
-  const filechanged = async (selectfile) => {
+  const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동",selectfile.value);
-      setreceivedData(selectfile.value);
+      console.log("변동1",selectfile);
+      console.log("변동2",selectque);      
+      setreceivedData(selectfile);
+      setreceivedDataque(selectque);
     }
   };
 
@@ -52,7 +58,7 @@ export default function Home() {
       {/* 2번 프레임 */}
       <div id='outter_frame2'>
           {/* <TopLabel activeStep={activeStepVal}/> */}
-          <Top_select method2={filechanged} method={runmodel} page={page} routed={receivedData}/>
+          <Top_select method2={filechanged} method={runmodel} page={page} routed={receivedData} />
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
@@ -70,9 +76,9 @@ export default function Home() {
                   )} */}
                   {csvstatus && (
                       <>
-                      <FullFeaturedCrudGrid onDataReceived={dataFromChild} file={receivedData}/>
+                      <FullFeaturedCrudGrid onDataReceived={dataFromChild} file={receivedData} fileque={receivedDataque}/>
                       <div id='netspace'>
-                        <FullFeaturedCrudGrid2 onDataReceived={setDataFromChild} file={receivedData}/>
+                        <FullFeaturedCrudGrid2 onDataReceived={setDataFromChild} file={receivedData} fileque={receivedDataque}/>
                       </div>
                       </>
                   )}

@@ -8,98 +8,211 @@ import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import {useEffect, useState } from 'react';
 import axios from 'axios';
+import Stack from '@mui/material/Stack';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
 
 
-export default function AxisWithComposition() {
-
+export default function AxisWithComposition({file,fileque}) {
+    const[chartType, setChartType] = React.useState('긍정');
     const[chartdata,setchartdata] =useState();
     const[chartlabel,setchartlabel] =useState();
+    const[chartdata_neg,setchartdata_neg] =useState();
+    const[chartlabel_neg,setchartlabel_neg] =useState();
+
+    const[renderstate,setrenderstate] =useState(0);
+    const handleChartType = (event, newChartType) => {
+        if (newChartType !== null) {
+          setChartType(newChartType);
+        }
+    };
+    // console.log("barline11",file);
+    // console.log("barline11",fileque);
 
     useEffect(() => {
+        console.log("bar_fileque",fileque);
         mkchart_bar();
-      }, []);
+    }, [file,fileque]);
 
     const mkchart_bar = async () => {
-        const que= "B8-2.%E2%80%9CJammy%28%EC%9E%AC%EB%AF%B8%29%E2%80%9D%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EC%B6%94%EC%B2%9C%20%EC%9D%98%ED%96%A5%EC%9D%B4%20%EB%B3%B4"
-        +"%ED%86%B5%EC%9D%B4%EA%B1%B0%EB%82%98%20%EC%B6%94%EC%B2%9C%ED%95%98%EC%A7%80%20%EC%95%8A"
-        +"%EB%8A%94%20%EC%9D%B4%EC%9C%A0%EB%8A%94%20%EB%AC%B4%EC%97%87%EC%9E%85%EB%8B%88%EA%B9%8C%3F";
-        const p_name = "2302019_A_%282023-11-03";
+        if (fileque === undefined){
+            return;
+        }
+        const params = {
+            p_name: file,
+            question: fileque,
+            graph_type: 'bar',
+            top_n: '10',
+            
+        };
+        const queryString = new URLSearchParams(params).toString();
+        const chartDataUrlNeg = `http://115.68.193.117:9999/net/simple-graph?${queryString}&emotion=부정,`
+        const chartDataUrlPos = `http://115.68.193.117:9999/net/simple-graph?${queryString}&emotion=긍정,`
 
-        const chartDataUrlNeg = `http://115.68.193.117:9999/net/simple-graph?p_name=${p_name}%29&graph_type=sample&emotion=부정&top_n=10&Q_code=${que}`
-        const chartDataUrlPos = `http://115.68.193.117:9999/net/simple-graph?p_name=${p_name}%29&graph_type=sample&emotion=긍정&top_n=10&Q_code=${que}`
-
-        try {
-            const responsePos = await axios.get(chartDataUrlPos);
-
-            console.log("responsePos",responsePos);
-            let temp =Object.keys(responsePos).map(key => responsePos[key]);
-            const temp2 = temp[0]
-            const dataArray = Array.from(temp2);
-            console.log("dataArray",dataArray);
-
-            const uData = dataArray.map(item => item.id); 
-            const xLabels = dataArray.map(item => item.net_text);
-            console.log("uData",uData);
-            console.log("xLabels",xLabels);
-
-            setchartdata(uData);
+        const responsePos = await axios.get(chartDataUrlPos);
+        let temp =Object.keys(responsePos).map(key => responsePos[key]);
+        const temp2 = temp[0]
+        const uData = temp2.datasets[0].data
+        const xLabels = temp2.labels
+        setchartdata(uData);
+        if (xLabels.length > 0){
             setchartlabel(xLabels);
+        }
 
-        } catch (error) {
-            console.error('바랑라인에러', error);
-        }    
+        const responseNeg = await axios.get(chartDataUrlNeg);
+        let temp3 =Object.keys(responseNeg).map(key => responseNeg[key]);
+        const temp4 = temp3[0]
+        const uData2 = temp4.datasets[0].data
+        const xLabels2 = temp4.labels
+
+        setchartdata_neg(uData2);
+        if (xLabels2.length > 0){
+            setchartlabel_neg(xLabels2);
+        }
+        setrenderstate(1)
     };
 
-    // chartlabel
-    // chartdata
-  return (
-
-    <Box sx={{ width: '100%', maxWidth: 600 }}>
-        {chartdata && (
-            <ResponsiveChartContainer
-                xAxis={[
-                {
-                    scaleType: 'band',
-                    data: chartlabel,
-                    id: 'quarters',
-                    label: 'Quarters',  
-                },
-                ]}
-                yAxis={[{ id: 'money' }, { id: 'quantities' }]}
-                series={[
-                {
-                    type: 'line',
-                    id: 'revenue',
-                    yAxisKey: 'money',
-                    data: chartdata,
-                    color:'#f28e2c'                    
-                },
-                {
-                    type: 'bar',
-                    id: 'cookies',
-                    yAxisKey: 'quantities',
-                    data: chartdata,
-                    color:'#4e79a7'
-                },
-                ]}
-                height={400}
-                margin={{ left: 70, right: 70 }}
-                sx={{
-                [`.${axisClasses.left} .${axisClasses.label}`]: {
-                    transform: 'translate(-25px, 0)',
-                },
-                [`.${axisClasses.right} .${axisClasses.label}`]: {
-                    transform: 'translate(30px, 0)',
-                },
-                }}
-            >
-                <BarPlot />
-                <LinePlot />
-                <ChartsXAxis axisId="quarters" label="NET" labelFontSize={18} />
-                <ChartsYAxis axisId="quantities" label="이ㅏ름뭐로" />
-            </ResponsiveChartContainer>
-
+    return (
+        <>
+        {renderstate ===1 && (
+        <>
+        <Stack
+        direction={{ xs: 'column', xl: 'row' }}
+        spacing={1}
+        sx={{ width: '100%' }}
+        >
+            <Box sx={{ width: '100%', maxWidth: 1000}}>
+            { chartdata && (
+                <>
+                <ToggleButtonGroup
+                    value={chartType}
+                    exclusive
+                    onChange={handleChartType}
+                    aria-label="chart type"
+                    fullWidth
+                >
+                    {['긍정', '부정'].map((type) => (
+                        <ToggleButton key={type} value={type} aria-label="left aligned">
+                        {type}
+                        </ToggleButton>
+                    ))}
+                </ToggleButtonGroup>
+                {chartType === '긍정' && (
+                    <>
+                    {chartdata && (
+                        <>
+                        {chartlabel && (
+                            <ResponsiveChartContainer
+                                xAxis={[
+                                {
+                                    scaleType: 'band',
+                                    data: chartlabel,
+                                    id: 'quarters',
+                                    label: 'Quarters',  
+                                },
+                                ]}
+                                yAxis={[{ id: 'money' }, { id: 'quantities' }]}
+                                series={[
+                                {
+                                    
+                                    curve: "linear",
+                                    type: 'line',
+                                    id: 'revenue',
+                                    yAxisKey: 'money',
+                                    data: chartdata,
+                                    color:'#f28e2c'                    
+                                },
+                                {
+                                    type: 'bar',
+                                    id: 'cookies',
+                                    yAxisKey: 'quantities',
+                                    data: chartdata,
+                                    color:'#4e79a7'
+                                },
+                                ]}
+                                // width={1500}
+                                height={590}
+                                margin={{ left: 50, right: 50 }}
+                                sx={{
+                                [`.${axisClasses.left} .${axisClasses.label}`]: {
+                                    transform: 'translate(-25px, 0)',
+                                },
+                                [`.${axisClasses.right} .${axisClasses.label}`]: {
+                                    transform: 'translate(30px, 0)',
+                                },
+                                }}
+                            >
+                                <BarPlot />
+                                <LinePlot />
+                                <ChartsXAxis axisId="quarters" label="NET" labelFontSize={18} />
+                                <ChartsYAxis axisId="quantities" label="" />
+                            </ResponsiveChartContainer>
+                        )}
+                        </>
+                    )}
+                    </>
+                )}
+                {chartType === '부정' && (
+                    <>
+                    {chartdata_neg && (
+                        <>
+                        {chartlabel_neg && (
+                            <ResponsiveChartContainer
+                                xAxis={[
+                                {
+                                    scaleType: 'band',
+                                    data: chartlabel_neg,
+                                    id: 'quarters',
+                                    label: 'Quarters',  
+                                },
+                                ]}
+                                yAxis={[{ id: 'money' }, { id: 'quantities' }]}
+                                series={[
+                                {
+                                    
+                                    curve: "linear",
+                                    type: 'line',
+                                    id: 'revenue',
+                                    yAxisKey: 'money',
+                                    data: chartdata_neg,
+                                    color:'#f28e2c'                    
+                                },
+                                {
+                                    type: 'bar',
+                                    id: 'cookies',
+                                    yAxisKey: 'quantities',
+                                    data: chartdata_neg,
+                                    color:'#4e79a7'
+                                },
+                                ]}
+                                // width={1500}
+                                height={590}
+                                margin={{ left: 50, right: 50 }}
+                                sx={{
+                                [`.${axisClasses.left} .${axisClasses.label}`]: {
+                                    transform: 'translate(-25px, 0)',
+                                },
+                                [`.${axisClasses.right} .${axisClasses.label}`]: {
+                                    transform: 'translate(30px, 0)',
+                                },
+                                }}
+                            >
+                                <BarPlot />
+                                <LinePlot />
+                                <ChartsXAxis axisId="quarters" label="NET" labelFontSize={18} />
+                                <ChartsYAxis axisId="quantities" label="" />
+                            </ResponsiveChartContainer>
+                        )}
+                        </>
+                    )}
+                    </>
+                )}
+            </>
+            )}
+            </Box>
+        </Stack>
+        </>
         )}
-    </Box>
-  );
+        </>
+    );
 }
