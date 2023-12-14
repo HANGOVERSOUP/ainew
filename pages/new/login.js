@@ -22,8 +22,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="">
+        LHB
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -38,20 +38,18 @@ const defaultTheme = createTheme();
 export default function SignIn() {
 
     const router = useRouter()
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const handleLogin = async () => {
-        console.log("id",id);
-        console.log("aaaaa",password);
+   
+    const handleLogin = async (userid, userpwd) => {
+      // console.log("id : ",userid);
+      // console.log("pwd : ",userpwd);
       // ... Fetch request and response handling ...
       const formData = new URLSearchParams();
       formData.append('grant_type', 'password');
-      formData.append('username', id);
-      formData.append('password', password);
+      formData.append('username', userid);
+      formData.append('password', userpwd);
   
       try {
-        const response = await fetch('http://115.68.193.117:8000/users/token', {
+        const response = await fetch('http://115.68.193.117:9999/users/token', {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -62,19 +60,20 @@ export default function SignIn() {
   
         if (response.status === 200) {
           const data = await response.json();
-          localStorage.setItem('token', data.access_token);
+          sessionStorage.setItem('token', data.access_token);
   
-          // Retrieve the intended route from localStorage
-          const intendedRoute = localStorage.getItem('intendedRoute');
+          // Retrieve the intended route from sessionStorage
+          const intendedRoute = sessionStorage.getItem('intendedRoute');
   
           if (intendedRoute) {
-            // Clear the intended route from localStorage
-            localStorage.removeItem('intendedRoute');
+            // Clear the intended route from sessionStorage
+            sessionStorage.removeItem('intendedRoute');
   
             // Navigate to the intended route
             router.replace(intendedRoute);
           } else {
             // If intended route is not available, redirect to a default route
+            // console.log('goto default');
             router.replace('/'); // Replace with your default route
           }
         } else {
@@ -88,14 +87,14 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setPassword(data.get('password'));
-    setId(data.get('email'));
+    const userid = data.get('email');
+    const userpwd = data.get('password');
 
-    console.log({
+    console.log({ 
       email: data.get('email'),
       password: data.get('password'),
     });
-    handleLogin();
+    handleLogin(userid,userpwd);
   };
 
   return (

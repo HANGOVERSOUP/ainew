@@ -58,15 +58,15 @@ export default function FullFeaturedCrudGrid2({file,fileque,  onDataReceived }) 
 
   const fetchData = async () => {
     try {
-      console.log("fetch!!");
+      // console.log("fetch!!");
       // const myurl = `http://115.68.193.117:8000/net/file-json-tt?filename=${file}`;
       const myurl = `http://115.68.193.117:9999/net/net_info?p_name=${file}`;
       
-      console.log("onleynet_myurl,",myurl);
+      // console.log("onleynet_myurl,",myurl);
 
       const response = await axios.get(myurl);
       const responseData = response.data;
-      console.log("onleynet_responseData",responseData);
+      // console.log("onleynet_responseData",responseData);
 
       const dataArray = Object.keys(responseData).map(key => responseData[key]);
 
@@ -124,15 +124,15 @@ export default function FullFeaturedCrudGrid2({file,fileque,  onDataReceived }) 
     
     setuploadrows(uploadrows.concat(updatedRow));
 
-    console.log("rows",rows);
-    console.log("newRowaa",newRow);
-    console.log("uploadrows",uploadrows);
-    console.log("updatedRow",updatedRow);
+    // console.log("rows",rows);
+    // console.log("newRowaa",newRow);
+    // console.log("uploadrows",uploadrows);
+    // console.log("updatedRow",updatedRow);
 
     const jsonRorororo = JSON.stringify(updatedRow);
 
     editrow(jsonRorororo);
-    console.log("onlynet_jsonRorororo",jsonRorororo);
+    // console.log("onlynet_jsonRorororo",jsonRorororo);
     return updatedRow;
   };
 
@@ -144,10 +144,10 @@ export default function FullFeaturedCrudGrid2({file,fileque,  onDataReceived }) 
 
       const response = await axios.post(`http://115.68.193.117:9999/net/net-change`, formData);
 
-      console.log("onlynet - editing - response",response);
+      // console.log("onlynet - editing - response",response);
 
 
-      console.log("before fetch!");
+      // console.log("before fetch!");
       fetchData(file);
       sendDataToParent();
     }catch (error) {
@@ -158,7 +158,7 @@ export default function FullFeaturedCrudGrid2({file,fileque,  onDataReceived }) 
   };
 
   const sendDataToParent = () => {
-    console.log("sendDataToParent!! 보냄!");
+    // console.log("sendDataToParent!! 보냄!");
     const data = 'updated';
     onDataReceived(data); // Calling the callback function from ParentComponent
   };
@@ -235,7 +235,7 @@ export default function FullFeaturedCrudGrid2({file,fileque,  onDataReceived }) 
     <div className='onlyflex'>
       <Box
         sx={{
-          height: 700,
+          height: 660,
           width: '100%',
           '& .actions': {
             color: 'text.secondary',

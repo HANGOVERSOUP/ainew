@@ -4,7 +4,7 @@ import axios from 'axios';
 import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
 import FullFeaturedCrudGrid from "../../newcomp/editmode_edit";
-
+import AuthCheck from "../../newcomp/login_auth-check";
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
   const router = useRouter();
@@ -18,33 +18,33 @@ export default function Home() {
   // 시각화버튼
   const runmodel = async () => {
 
-    console.log("selectfilaaae",receivedData);
-    console.log("selectq",receivedDataque);
+    // console.log("selectfilaaae",receivedData);
+    // console.log("selectq",receivedDataque);
 
     const params = {
       question: receivedDataque,   
     };
     const queryString = new URLSearchParams(params).toString();
-    console.log("queryString",queryString);
+    // console.log("queryString",queryString);
     router.push(`./data-dashboard?p_name=${receivedData}&question=${queryString}`);
   };
   // net수정버튼
   const runmodel2 = async () => {
 
-    console.log("selectfilaaae",receivedData);
-    console.log("selectq",receivedDataque);
+    // console.log("selectfilaaae",receivedData);
+    // console.log("selectq",receivedDataque);
 
     const queryString = encodeURIComponent(receivedDataque);
     // const queryString = new URLSearchParams(params).toString();
-    console.log("queryString",queryString);
+    // console.log("queryString",queryString);
     router.push(`./data-net?p_name=${receivedData}&question=${queryString}`);
   };
 
   // 파일명변동이벤트
   const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동1",selectfile);
-      console.log("변동2",selectque);      
+      // console.log("변동1",selectfile);
+      // console.log("변동2",selectque);      
       setreceivedData(selectfile);
       setreceivedDataque(selectque);
     }
@@ -67,7 +67,7 @@ export default function Home() {
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame' className='visualize_div'>
-            {/* <AuthCheck> */}
+            <AuthCheck>
             <div>
               <div id='rec'>
                   {/* <p>현재 설문 : {receivedData2}</p> */}
@@ -83,7 +83,7 @@ export default function Home() {
                   )}
               </div>
             </div>
-            {/* </AuthCheck> */}
+            </AuthCheck>
             {/* 메인: 선택지 , 차트내용 등 */}              
           </div>
       </div>

@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
-
+import AuthCheck from "/newcomp/login_auth-check";
 //aaa 
 
 export default function Home() {
@@ -23,6 +23,7 @@ export default function Home() {
   return (
     <>
       <div>
+        <AuthCheck>
         <Card variant="outlined" sx={{ minWidth: 275 }}>
           {/* data-upload */}
           <CardContent>
@@ -110,6 +111,7 @@ export default function Home() {
             </CardActions>
           </CardContent>
         </Card>
+        </AuthCheck>
       </div>
     </>
   )

@@ -5,7 +5,8 @@ import Button from '@mui/material/Button';
 import BasicModal from "../../newcomp/global_modal";
 import CircularIndeterminate from "../../newcomp/global_spinner";
 import Side_bar from "../../newcomp/global_side_bar";
-import Top_select from "../../newcomp/global_select_que";
+import Top_select from "../../newcomp/global_select_que_upload";
+import AuthCheck from "../../newcomp/login_auth-check";
 
 export default function Home() {
     const router = useRouter();
@@ -47,7 +48,7 @@ export default function Home() {
     
     // 업로드 이벤트
     const handleUpload = async (filename) => {
-      console.log("filename",filename);
+      // console.log("filename",filename);
       if (!selectedFile) {
         return;
       }
@@ -55,23 +56,23 @@ export default function Home() {
         // 스피너 on
         setIsLoading(true);
         
-        console.log("selectedFile",selectedFile);
-        console.log("selectedFile2",selectedFile2);
+        // console.log("selectedFile",selectedFile);
+        // console.log("selectedFile2",selectedFile2);
 
 
         // post formdata 생성
         const formData = new FormData();
         formData.append('files', selectedFile);
-        console.log("formData1",formData);
+        // console.log("formData1",formData);
 
         formData.append('files', selectedFile2);
-        console.log("formData2",formData);
+        // console.log("formData2",formData);
 
 
         //포스트 요청
         // const response = await axios.post(`http://115.68.193.117:8000/net/upload_t?model_type=${model_number}`, formData);
         const response = await axios.post(`http://115.68.193.117:9999/net/upload_file`, formData);
-        console.log("response",response.data);
+        // console.log("response",response.data);
 
 
         // 선택파일 이름저장
@@ -79,15 +80,15 @@ export default function Home() {
 
         //리스폰스 반응
         if(response.data==="끝"){
-            //스핀
-            setIsLoading(false); 
-            //모달  
-            setHasError(false);
+          //스핀
+          setIsLoading(false); 
+          //모달  
+          setHasError(false);
 
-            let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
-            cleanedString = cleanedString.replace(/ /g, '_');
+          let cleanedString = uploadFileName.replace(/\.csv/g, '').replace(/\.xlsx/g, '');
+          cleanedString = cleanedString.replace(/ /g, '_');
 
-            router.push(`./data-check-raw?data=${cleanedString}`);
+          router.push(`./data-check-raw?data=${cleanedString}`);
         }
         // 리스폰스 fail
         else{
@@ -109,13 +110,14 @@ export default function Home() {
   };
 
   function notworking(){
-    console.log("workingon");
+    // console.log("workingon");
   }
   const i=0;
   const page =1;
   return (
     //1번 프레임 
     <div id='outter_frame1'>
+      {/* <AuthCheck> */}
       {/* 왼쪽 바 */}
       <div id ='left_bar'>
         <Side_bar index={i}/>
@@ -128,7 +130,7 @@ export default function Home() {
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame'>
-            {/* <AuthCheck> */}
+            <AuthCheck>
 
               {isLoading ? (
 
@@ -290,10 +292,11 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            {/* </AuthCheck> */}
+            </AuthCheck>
             {/* 메인: 선택지 , 차트내용 등 */}              
           </div>
       </div>
+      
     </div>
   );
 }

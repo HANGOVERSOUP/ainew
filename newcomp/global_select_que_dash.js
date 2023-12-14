@@ -12,8 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 export default function Top_select({method,method2,page,routed_p,routed_q}) {
-    console.log("global_select_que_dash_routed_p",routed_p);
-    console.log("global_select_que_dash_routed_q",routed_q);
+    // console.log("global_select_que_dash_routed_p",routed_p);
+    // console.log("global_select_que_dash_routed_q",routed_q);
     const router = useRouter();    
 
     // if (router.query.data===undefined){
@@ -123,7 +123,7 @@ export default function Top_select({method,method2,page,routed_p,routed_q}) {
                         renderInput={(params) => <TextField {...params} label="데이터를 검색하거나 선택하세요." />}
                         // value={selectfile}
                     />
-                    <div id='top_radio'>
+                    {/* <div id='top_radio'>
                         <FormControl>
                             <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
                             <RadioGroup
@@ -136,7 +136,7 @@ export default function Top_select({method,method2,page,routed_p,routed_q}) {
                             <FormControlLabel value="other" control={<Radio />} label="Other" />
                             </RadioGroup>
                         </FormControl>
-                    </div>
+                    </div> */}
                </div>
                
                 <div id='dash_options' className='onlyflex'>
@@ -152,10 +152,10 @@ export default function Top_select({method,method2,page,routed_p,routed_q}) {
                         />
                     {/* )}   */}
                     
-                    <Button id='chart_make' onClick={method} endIcon={<AutoFixHighIcon />} focusRipple={true} size="large" variant="contained" color="primary">
+                    {/* <Button id='chart_make' onClick={method} endIcon={<AutoFixHighIcon />} focusRipple={true} size="large" variant="contained" color="primary">
                 
                         차트 재생성
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
 

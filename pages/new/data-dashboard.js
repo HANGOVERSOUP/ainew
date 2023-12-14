@@ -6,7 +6,7 @@ import PieAnimation from "../../newcomp/chart_pie";
 import CombinedChart from "../../newcomp/chart_bar_line";
 import axios from 'axios';
 import { BedRounded } from '@mui/icons-material';
-
+import AuthCheck from "../../newcomp/login_auth-check";
 export default function Home() {
   const router = useRouter();
 
@@ -16,14 +16,14 @@ export default function Home() {
   const [receivedData,setreceivedData]=useState(router.query.p_name);
   const [receivedDataque,setreceivedDataque]=useState(router.query.question);
   const [good,setgood]=useState("bad");
-  console.log("dash_router.query",router.query);
-  console.log("dash_router.query.data",receivedData);
-  console.log("dash_router.query.question",receivedDataque);
+  // console.log("dash_router.query",router.query);
+  // console.log("dash_router.query.data",receivedData);
+  // console.log("dash_router.query.question",receivedDataque);
   // 파일명변동이벤트
   const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("dash_변동1",selectfile);
-      console.log("dash_변동2",selectque);
+      // console.log("dash_변동1",selectfile);
+      // console.log("dash_변동2",selectque);
       setreceivedData(selectfile);
       setreceivedDataque(selectque);
       setgood("good");
@@ -47,7 +47,7 @@ export default function Home() {
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame'>
-            {/* <AuthCheck> */}
+            <AuthCheck>
             <div className='onlyflex' id='chart_contain'>
             {good ==="good" &&(
             <>
@@ -62,7 +62,7 @@ export default function Home() {
               </>
             )}
             </div>
-            {/* </AuthCheck> */}
+            </AuthCheck>
             {/* 메인: 선택지 , 차트내용 등 */}              
           </div>
       </div>

@@ -5,7 +5,7 @@ import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
 import FullFeaturedCrudGrid2 from "../../newcomp/editnet_edit_onlynet";
 import FullFeaturedCrudGrid from "../../newcomp/editnet_edit_whole";
-
+import AuthCheck from "../../newcomp/login_auth-check";
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
   const router = useRouter();
@@ -15,9 +15,9 @@ export default function Home() {
   // }
   const [receivedData,setreceivedData]=useState(router.query.p_name);
   const [receivedDataque,setreceivedDataque]=useState(router.query.question);
-  console.log("data-net-recie_sssssssss",router.query);
-  console.log("data-net-recie_p",receivedData);
-  console.log("data-net-recie_q",receivedDataque);
+  // console.log("data-net-recie_sssssssss",router.query);
+  // console.log("data-net-recie_p",receivedData);
+  // console.log("data-net-recie_q",receivedDataque);
   // 모델실행버튼클릭이벤트
   const runmodel = async (selectfile) => {
     console.log("selectfilaaae",selectfile);
@@ -27,8 +27,8 @@ export default function Home() {
   // 파일명변동이벤트
   const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동1",selectfile);
-      console.log("변동2",selectque);      
+      // console.log("변동1",selectfile);
+      // console.log("변동2",selectque);      
       setreceivedData(selectfile);
       setreceivedDataque(selectque);
     }
@@ -38,7 +38,7 @@ export default function Home() {
 
   const handleDataFromChild = (data) => {
     // Do something with the data received from ChildComponent
-    console.log('Data from Child:_이거 부모컴포넌트임', data);
+    // console.log('Data from Child:_이거 부모컴포넌트임', data);
     setDataFromChild(data);
   };
 
@@ -63,7 +63,7 @@ export default function Home() {
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame'>
-            {/* <AuthCheck> */}
+            <AuthCheck>
             <div>
               <div id='rec'>
                   {/* <p>현재 설문 : {receivedData2}</p> */}
@@ -84,7 +84,7 @@ export default function Home() {
                   )}
               </div>
             </div>
-            {/* </AuthCheck> */}
+            </AuthCheck>
             {/* 메인: 선택지 , 차트내용 등 */}              
           </div>
       </div>

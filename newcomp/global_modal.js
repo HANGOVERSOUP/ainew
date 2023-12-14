@@ -33,7 +33,7 @@ export default function BasicModal() {
           Text in a modal
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          끼야ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+          에러 발생
         </Typography>
         <Button onClick={handleClose} variant="outlined" style={{ position: 'absolute', top: '10px', right: '10px' }}>
           닫기

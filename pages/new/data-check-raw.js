@@ -5,7 +5,7 @@ import Side_bar from "../../newcomp/global_side_bar";
 import Top_select from "../../newcomp/global_select_que";
 import FullFeaturedCrudGrid from "../../newcomp/editraw_edit";
 // import FullFeaturedCrudGrid from "../../components/test_mui_edit";
-
+import AuthCheck from "../../newcomp/login_auth-check";
 export default function Home() {
   const [csvstatus, setCsvStatus] = useState(true);
   const router = useRouter();
@@ -18,12 +18,12 @@ export default function Home() {
 
   // 모델실행버튼클릭이벤트
   const runmodel = async (selectfile) => {
-    console.log("selectfilaaae",selectfile);
+    // console.log("selectfilaaae",selectfile);
     try{
       // const myurl = `http://115.68.193.117:9999/net/run-model?p_name=koreanaaaaaaa&model=kri-2-3-brand-model`;
       const response = await axios.get(myurl);
   
-      console.log("modelrun",response);
+      // console.log("modelrun",response);
     }catch(error){
       console.error('Error model:', error);
     }
@@ -32,8 +32,8 @@ export default function Home() {
   // 파일명변동이벤트
   const filechanged = async (selectfile,selectque) => {
     if(selectfile!=null){
-      console.log("변동1",selectfile);
-      console.log("변동2",selectque);      
+      // console.log("변동1",selectfile);
+      // console.log("변동2",selectque);      
       setreceivedData(selectfile);
       setreceivedDataque(selectque);
     }
@@ -56,7 +56,7 @@ export default function Home() {
 
           {/* 메인: 선택지 , 차트내용 등 */}
           <div id='main_frame'>
-            {/* <AuthCheck> */}
+            <AuthCheck>
             <div>
               <div id='rec'>
                   {/* <p>현재 설문 : {receivedData2}</p> */}
@@ -72,7 +72,7 @@ export default function Home() {
                   )}
               </div>
             </div>
-            {/* </AuthCheck> */}
+            </AuthCheck>
             {/* 메인: 선택지 , 차트내용 등 */}              
           </div>
       </div>

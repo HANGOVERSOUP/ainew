@@ -30,7 +30,7 @@ export default function AxisWithComposition({file,fileque}) {
     // console.log("barline11",fileque);
 
     useEffect(() => {
-        console.log("bar_fileque",fileque);
+        // console.log("bar_fileque",fileque);
         mkchart_bar();
     }, [file,fileque]);
 

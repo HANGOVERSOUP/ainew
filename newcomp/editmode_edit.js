@@ -68,7 +68,7 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
       const queryString = new URLSearchParams(params).toString();
       
       const myurl = `http://115.68.193.117:9999/net/data-check?${queryString}`;
-      console.log("myurl,",myurl);
+      // console.log("myurl,",myurl);
 
       const response = await axios.get(myurl);
       const responseData = response.data;
@@ -103,11 +103,11 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
       const queryString = new URLSearchParams(params).toString();
       const myurl = `http://115.68.193.117:9999/net/net_info?${queryString}`;
       
-      console.log("myurl_net,",myurl);
+      // console.log("myurl_net,",myurl);
       const response = await axios.get(myurl);
       const responseData = response.data;
       const netArray = [];
-      console.log("fetchData_net_responseData",responseData);
+      // console.log("fetchData_net_responseData",responseData);
 
       // const netData = JSON.parse(responseData);
       const netData = responseData;
@@ -116,7 +116,7 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
         const netValue = netData[key].net_text;
         netArray.push(netValue);
       }
-      console.log("netArray",netArray);
+      // console.log("netArray",netArray);
       setnet(netArray);
 
     } catch (error) {
@@ -135,9 +135,9 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
     if(onDataReceived==='updated'){
       fetchData(file);
       fetchData_net(file);
-      console.log("onDataReceived_before",onDataReceived);
+      // console.log("onDataReceived_before",onDataReceived);
       setUpdatedDataReceived('complete'); 
-      console.log("onDataReceived_after",onDataReceived);
+      // console.log("onDataReceived_after",onDataReceived);
       setForceRender(prev => !prev);
     }else{
       console.log("onDataReceived_else",onDataReceived);
@@ -189,10 +189,10 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
     
     setuploadrows(uploadrows.concat(updatedRow));
 
-    console.log("rows",rows);
-    console.log("newRowaa",newRow);
-    console.log("uploadrows",uploadrows);
-    console.log("updatedRow",updatedRow);
+    // console.log("rows",rows);
+    // console.log("newRowaa",newRow);
+    // console.log("uploadrows",uploadrows);
+    // console.log("updatedRow",updatedRow);
 
 
     // const rorororo1 = {
@@ -202,7 +202,7 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
     // }
 
     const jsonRorororo = JSON.stringify(updatedRow);
-    console.log("왼쪽 전체수정",jsonRorororo);
+    // console.log("왼쪽 전체수정",jsonRorororo);
     editrow(jsonRorororo);
 
     return updatedRow;
@@ -217,7 +217,7 @@ export default function FullFeaturedCrudGrid({file,fileque,onDataReceived }) {
 
       const response = await axios.post(`http://115.68.193.117:9999/net/data-change`, formData);
 
-      console.log("editing - response",response);
+      // console.log("editing - response",response);
     }catch (error) {
       console.error('Error editing file:', error);
     }

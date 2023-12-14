@@ -167,10 +167,10 @@ export default function FullFeaturedCrudGrid({file ,fileque}) {
 
       const response = await axios.post(`http://115.68.193.117:9999/net/raw_data/change`, formData);
 
-      console.log("raw - editing - response",response);
+      // console.log("raw - editing - response",response);
 
 
-      console.log("before fetch!");
+      // console.log("before fetch!");
       fetchData(file);
       // 마더로 상태보내기 리로드용
       // sendDataToParent();
@@ -179,7 +179,7 @@ export default function FullFeaturedCrudGrid({file ,fileque}) {
   }
 
   const sendDataToParent = () => {
-      console.log("sendDataToParent!! 보냄!");
+      // console.log("sendDataToParent!! 보냄!");
       const data = 'updated';
       onDataReceived(data); // Calling the callback function from ParentComponent
     };

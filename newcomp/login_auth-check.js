@@ -1,26 +1,31 @@
 'use client'
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import RedirectAfterLogin from './redirect-login';
+import RedirectAfterLogin from './login_redirect-login';
+
 const checkAuthentication = () => {
+  console.log("checkAuthentication");
   if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token'); // Change localStorage to sessionStorage here
+
+    // console.log("token", token);
     return token !== null;
   }
   return false;
 };
-
-
 
 const AuthCheck = ({children}) => {
   const router = useRouter();
 
   useEffect(() => {
     const isAuthenticated = checkAuthentication();
+    // console.log("isAuthenticated", isAuthenticated);
+    // console.log("redirect1");
 
     if (!isAuthenticated) {
-      router.replace('/loginpage'); // Redirect to login page if not authenticated
-      localStorage.setItem('intendedRoute', router.asPath);
+      // console.log("redirect2");
+      router.replace('/new/login');
+      sessionStorage.setItem('intendedRoute', router.asPath); // Change localStorage to sessionStorage here
     }
   }, [router]);
 

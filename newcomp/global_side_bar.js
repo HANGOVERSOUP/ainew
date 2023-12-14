@@ -94,7 +94,7 @@ export default function MiniDrawer({index}) {
     
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const text = ['데이터 업로드', 'Row데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','NET 수정'];
+  const text = ['데이터 업로드', 'Raw데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','NET 수정'];
   const textfiled=text[index];
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,8 +106,8 @@ export default function MiniDrawer({index}) {
 
   const url =['./data-upload?data=','./data-check?data=','./data-check?data=','./data-check?data='];
   function upload_click(index){
-    console.log("indexa" , index);
-    console.log("url[index]" , url[index]);
+    // console.log("indexa" , index);
+    // console.log("url[index]" , url[index]);
     // router.push(`${url[index]}+${cleanedString}`);
     
   };

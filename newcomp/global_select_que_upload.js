@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-export default function Top_select({method,method2,page,routed}) {
+export default function Top_select({method,method2,method3,page,routed}) {
 
     const router = useRouter();    
 
@@ -35,22 +35,22 @@ export default function Top_select({method,method2,page,routed}) {
 
 
     // 선택된 파일로 질문 리스트 가져오기
-    // const handleSelectChange = async (selected) => {
-    //     const newSelectedOptions = Array.isArray(selected) ? selected : [selected];
-    //     setSelectedOptions(newSelectedOptions);
-    //     setIsSurveyOptionSelected(newSelectedOptions.length > 0);
-    //     console.log("global_select_que_newArray",newSelectedOptions);
+    const handleSelectChange = async (selected) => {
+        const newSelectedOptions = Array.isArray(selected) ? selected : [selected];
+        setSelectedOptions(newSelectedOptions);
+        setIsSurveyOptionSelected(newSelectedOptions.length > 0);
+        // console.log("global_select_que_newArray",newSelectedOptions);
 
-    //     if (newSelectedOptions.length > 0) {
-    //       const selectedOption = newSelectedOptions[0];         
-    //       const questionOptionUrl = `http://115.68.193.117:9999/net/question-list?p_name=${selectedOption}`;
-    //       const response = await axios.get(questionOptionUrl);
-    //       const sur = response.data
-    //       const newArray = sur.map(item => item.question_text);
+        if (newSelectedOptions.length > 0) {
+          const selectedOption = newSelectedOptions[0];         
+          const questionOptionUrl = `http://115.68.193.117:9999/net/question-list?p_name=${selectedOption}`;
+          const response = await axios.get(questionOptionUrl);
+          const sur = response.data
+          const newArray = sur.map(item => item.question_text);
           
-    //       setQuestionOptions(newArray);
-    //     }
-    // };
+          setQuestionOptions(newArray);
+        }
+    };
 
     // API: Fetch survey options
     useEffect(() => {
@@ -89,14 +89,14 @@ export default function Top_select({method,method2,page,routed}) {
         setselectfile(value);
         // console.log("global_select_que_선택된 파일:", value);
 
-        // handleSelectChange(value)
+        handleSelectChange(value)
     };
-    // const handleChange3 = (event, value) => {
-    //     // setselectfile(value);
-    //     console.log("global_select_que_선택된 질문:", value);
+    const handleChange3 = (event, value) => {
+        // setselectfile(value);
+        // console.log("global_select_que_선택된 질문:", value);
 
-    //     handleQuestionChange(value)
-    // };
+        handleQuestionChange(value)
+    };
       
 
     const location = ['db','mo'];
@@ -182,7 +182,7 @@ export default function Top_select({method,method2,page,routed}) {
 
             </div>
 
-            <div>
+            <div id='container'>
 
                 {/* 조건에 맞춰 버튼을 변경합시다 업로드, 모델실행 등 */}
 
@@ -217,7 +217,7 @@ export default function Top_select({method,method2,page,routed}) {
                         <Button id='' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
                             시각화
                         </Button>
-                        <Button id='visual_btn' onClick={() => method()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
+                        <Button id='visual_btn' onClick={() => method3()} endIcon={<RestartAltIcon />} size="large" focusRipple={true} variant="contained" color="primary">
                             NET수정
                         </Button>
                     </div>
@@ -228,7 +228,6 @@ export default function Top_select({method,method2,page,routed}) {
                 ) : null}
             </div>
         </div>
-
     </div>
 );
 }

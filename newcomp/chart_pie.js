@@ -32,7 +32,7 @@ function PieAnimation({file,fileque}) {
       let temp =Object.keys(response).map(key => response[key]);
       const temp2 = temp[0];
 
-      console.log("chart_pie_response",response);
+      // console.log("chart_pie_response",response);
 
       setChartData(temp2);
     } catch (error) {
