@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import AuthCheck from "/newcomp/login_auth-check";
 //aaa 
 
-export default function Home() {
+export default function root() {
   const router = useRouter();
 
   const pageurl = ["data-upload","data-check-raw","data-check-model","data-net","data-dashboard",];

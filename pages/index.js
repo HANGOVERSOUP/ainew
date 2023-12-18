@@ -15,9 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
 
-
-
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,7 +32,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Home() {
 
     const router = useRouter()
    
