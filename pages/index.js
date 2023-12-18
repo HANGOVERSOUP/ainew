@@ -31,7 +31,7 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.aa
+// TODO remove, this demo shouldn't need to reset the theme.aaa
 
 const defaultTheme = createTheme();
 
