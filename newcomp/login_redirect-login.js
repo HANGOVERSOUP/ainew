@@ -12,6 +12,7 @@ const RedirectAfterLogin = ({ children }) => {
 
     if (intendedRoute && intendedRoute !== router.asPath) {
       router.replace(intendedRoute); // Redirect to the intended route
+      console.log("intendedRoute",intendedRoute);
     }
   }, [router]);
 

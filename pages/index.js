@@ -1,118 +1,171 @@
-import { Inter } from 'next/font/google'
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/router';
-import AuthCheck from "/newcomp/login_auth-check";
-//aaa 
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react';
 
-export default function Home() {
-  const router = useRouter();
 
-  const pageurl = ["data-upload","data-check-raw","data-check-model","data-net","data-dashboard",];
-  const enter =  (page) => {
-    // const url = `http://115.68.193.117:4000/new/${pageurl[page]}`;
-    const url = `./new/${pageurl[page]}`;
-    router.push(url);
-  }
+
+
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="">
+        LHB
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+// TODO remove, this demo shouldn't need to reset the theme.aa
+
+const defaultTheme = createTheme();
+
+export default function SignIn() {
+
+    const router = useRouter()
+   
+    const handleLogin = async (userid, userpwd) => {
+      // console.log("id : ",userid);
+      // console.log("pwd : ",userpwd);
+      // ... Fetch request and response handling ...
+      const formData = new URLSearchParams();
+      formData.append('grant_type', 'password');
+      formData.append('username', userid);
+      formData.append('password', userpwd);
+  
+      try {
+        const response = await fetch('http://115.68.193.117:9999/users/token', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: formData.toString(),
+        });
+  
+        if (response.status === 200) {
+          const data = await response.json();
+          sessionStorage.setItem('token', data.access_token);
+  
+          // Retrieve the intended route from sessionStorage
+          const intendedRoute = sessionStorage.getItem('intendedRoute');
+  
+          if (intendedRoute) {
+            // Clear the intended route from sessionStorage
+            sessionStorage.removeItem('intendedRoute');
+  
+            // Navigate to the intended route
+            router.replace(intendedRoute);
+          } else {
+            if(intendedRoute === null){
+              router.replace('./new/root');
+            }
+            router.replace('/'); 
+          }
+        } else {
+          console.error('Error fetching data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const userid = data.get('email');
+    const userpwd = data.get('password');
+
+    // console.log({ 
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    handleLogin(userid,userpwd);
+  };
 
   return (
-    <>
-      <div>
-        <AuthCheck>
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-upload */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_upload
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-            <CardActions>
-              <Button onClick={() => enter(0)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-check-raw */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_check_raw
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(1)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-check-model */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_check_model
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(2)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-net */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_net
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-            <CardActions>
-              <Button onClick={() => enter(3)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-dashboard */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_dashboard
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(4)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-        </AuthCheck>
-      </div>
-    </>
-  )
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            //   onChange={handleLogin}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
+  );
 }
