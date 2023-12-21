@@ -120,14 +120,14 @@ export default function AxisWithComposition({file,fileque}) {
                                     id: 'revenue',
                                     yAxisKey: 'money',
                                     data: chartdata,
-                                    color:'#f28e2c'                    
+                                    color:'#E48586'                    
                                 },
                                 {
                                     type: 'bar',
                                     id: 'cookies',
                                     yAxisKey: 'quantities',
                                     data: chartdata,
-                                    color:'#4e79a7'
+                                    color:'#2196F3'
                                 },
                                 ]}
                                 // width={1500}
@@ -175,14 +175,14 @@ export default function AxisWithComposition({file,fileque}) {
                                     id: 'revenue',
                                     yAxisKey: 'money',
                                     data: chartdata_neg,
-                                    color:'#f28e2c'                    
+                                    color:'#2196F3'                    
                                 },
                                 {
                                     type: 'bar',
                                     id: 'cookies',
                                     yAxisKey: 'quantities',
                                     data: chartdata_neg,
-                                    color:'#4e79a7'
+                                    color:'#E48586'
                                 },
                                 ]}
                                 // width={1500}

@@ -46,7 +46,7 @@ export default function Home() {
 
   }, [dataFromChild]);
 
-  const i=5;
+  const i=4;
   const page=2;
   return (
     //1번 프레임 

@@ -30,7 +30,7 @@ export default function Home() {
     }
   };                           
 
-  const i=4;
+  const i=3;
   const page=2;
   return (
     //1번 프레임 

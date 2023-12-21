@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react';
+import { CustomThemeProvider } from '../styles/ThemeContext';
+
 
 function Copyright(props) {
   return (
@@ -96,7 +98,7 @@ export default function Home() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <CustomThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -107,29 +109,40 @@ export default function Home() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+
+          <Box component="form" onSubmit={handleSubmit} noValidate   
+            sx={{
+              mt: 0, // 상단 여백을 theme 공간 단위로 조정
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+            <img
+              src="/kring.png" 
+              alt="Description" 
+              style={{ maxWidth: '100%', height: 'auto' , marginBottom:0}}
+            />
             <TextField
-              margin="normal"
+              margin="dense"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="아이디 입력"
               name="email"
               autoComplete="email"
               autoFocus
+              sx={{ mt: 0 }}
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호 입력"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -163,6 +176,6 @@ export default function Home() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
+    </CustomThemeProvider>
   );
 }

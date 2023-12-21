@@ -17,12 +17,18 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import EditNoteIcon from '@mui/icons-material/EditNote';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SavedSearchIcon from '@mui/icons-material/SavedSearch';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
+import { useRouter } from 'next/router';
+import { ThemeContext } from '../styles/ThemeContext';
+import { useContext } from 'react';
+import { Switch, FormControlLabel } from '@mui/material';
 
 const drawerWidth = 240;
+
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -91,10 +97,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function MiniDrawer({index}) {
-    
+
+  const { mode, toggleMode } = useContext(ThemeContext);
+  const handleChange = (event) => {
+    toggleMode(); // 토글 모드 함수를 호출하여 테마를 전환합니다
+  };
+
+  const router = useRouter(); 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const text = ['데이터 업로드', 'Raw데이터 검수', '모델데이터 검수','모델 데이터 확인', '데이터 시각화','NET 수정'];
+  const text = ['데이터 업로드', 'Raw데이터 검수', '모델데이터 검수', '데이터 시각화','NET 수정'];
   const textfiled=text[index];
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,11 +116,11 @@ export default function MiniDrawer({index}) {
     setOpen(false);
   };
 
-  const url =['./data-upload?data=','./data-check?data=','./data-check?data=','./data-check?data='];
+  const url =['./data-upload?data=','./data-check-raw?data=','./data-check-model?data=','./data-dashboard?data=', './data-net?data='];
   function upload_click(index){
     // console.log("indexa" , index);
     // console.log("url[index]" , url[index]);
-    // router.push(`${url[index]}+${cleanedString}`);
+    router.push(`${url[index]}}`);
     
   };
 
@@ -129,9 +141,16 @@ export default function MiniDrawer({index}) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             {textfiled}
           </Typography>
+
+    <FormControlLabel
+      control={<Switch checked={mode === 'light'} onChange={handleChange} color="default"/>}
+      label={mode === 'dark' ? '다크 모드' : '라이트 모드'}
+      sx={{ marginLeft: 'auto' }}
+    />
+
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -162,19 +181,19 @@ export default function MiniDrawer({index}) {
                 >   
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                   {index === 0 && <FileUploadIcon />}
-                  {index === 1 && <SavedSearchIcon />}
+                  {index === 1 && <SearchIcon />}
                   {index === 2 && <SavedSearchIcon />}
-                  {index === 3 && <EditNoteIcon />}
-                  {index === 4 && <BarChartIcon />}
-                  {index === 5 && <ModeEditOutlineIcon />}
+                  {index === 3 && <BarChartIcon />}
+                  {index === 4 && <ModeEditOutlineIcon />}
                   
 
                 </ListItemIcon>
+
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+
               </ListItemButton>
-              
-            </ListItem>
-            
+
+            </ListItem>        
           ))}
         </List>
         <Divider />

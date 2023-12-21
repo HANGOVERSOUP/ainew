@@ -81,7 +81,7 @@ export default function Top_select({method,method2,page,routed}) {
         dataselection();
     }, []);
 
-    const [datalocation, setdatalocation] = React.useState('mo');
+    const [datalocation, setdatalocation] = React.useState('');
     const handleChange = (event) => {
         setdatalocation(event.target.value);
     };
@@ -120,9 +120,10 @@ export default function Top_select({method,method2,page,routed}) {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={datalocation}
-                    label="Age"
+                    label="데이터 위치"
                     onChange={handleChange}
                     >
+                        <MenuItem value="" disabled>데이터 위치 선택</MenuItem>
                         <MenuItem value={location[0]}>DB</MenuItem>
                         <MenuItem value={location[1]}>재확인</MenuItem>
                     </Select>

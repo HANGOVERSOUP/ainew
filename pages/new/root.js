@@ -1,118 +1,81 @@
-import { Inter } from 'next/font/google'
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import AuthCheck from "/newcomp/login_auth-check";
-//aaa 
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { Box} from '@mui/system';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Noto Sans Korean',
+      'Spoqa Han Sans',
+      'Arial',
+      'sans-serif',
+    ].join(','),
+  },
+  palette: {
+    primary: {
+      main: '#2196F3',
+      dark: '#1976D2', // 어두운 파란색
+    },
+    background: {
+      default: '#F5F5F5',
+      paper: '#424242', // 어두운 배경색
+    },
+    text: {
+      primary: '#fff',
+      secondary: '#bdbdbd',
+    },
+    action: {
+      active: '#fff',
+    },
+  },
+});
 
 export default function root() {
   const router = useRouter();
 
-  const pageurl = ["data-upload","data-check-raw","data-check-model","data-net","data-dashboard",];
-  const enter =  (page) => {
-    // const url = `http://115.68.193.117:4000/new/${pageurl[page]}`;
+//   const pageurl = ["data-upload", "data-check-raw", "data-check-model", "data-net", "data-dashboard"];
+  const pageurl = ["data-upload"];
+  const enter = (page) => {
     const url = `./${pageurl[page]}`;
     router.push(url);
   }
 
   return (
-    <>
-      <div>
-        <AuthCheck>
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-upload */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_upload
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-            <CardActions>
-              <Button onClick={() => enter(0)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-check-raw */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_check_raw
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(1)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-check-model */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_check_model
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(2)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-net */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_net
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-            <CardActions>
-              <Button onClick={() => enter(3)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-          {/* data-dashboard */}
-          <CardContent>
-
-            <Typography variant="h5" component="div">
-              data_dashboard
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              홈페이지바로가기
-            </Typography>
-
-
-            <CardActions>
-              <Button onClick={() => enter(4)} size="small">들어가기</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-        </AuthCheck>
-      </div>
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <AuthCheck>
+        <Grid container spacing={4} alignItems="center" justifyContent="center" style={{ minHeight: '100vh' }}>
+        {/* <Grid container spacing={4} justifyContent="center"> */}
+          {pageurl.map((page, index) => (
+            // <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            <Grid item xs={3} key={index}>  
+              <Paper elevation={3} sx={{ padding: 2, backgroundColor: theme.palette.background.paper }}>
+                <Box p={2}>
+                  <Typography variant="h5" component="div" gutterBottom style={{ color: theme.palette.text.primary }}>
+                    {page.replace('-', ' ')}
+                  </Typography>
+                  <Typography sx={{ mb: 2 }} color="text.secondary">
+                    {/* 홈페이지 바로가기 */}
+                  </Typography>
+                  <Button 
+                    variant="contained" 
+                    style={{ backgroundColor: theme.palette.primary.dark, color: theme.palette.action.active }}
+                    onClick={() => enter(index)} 
+                    size="medium" 
+                    fullWidth
+                  >
+                    들어가기
+                  </Button>
+                </Box>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </AuthCheck>
+    </ThemeProvider>
+  );
 }
