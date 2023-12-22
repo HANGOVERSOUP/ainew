@@ -2,7 +2,9 @@ import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Side_bar from "../../newcomp/global_side_bar";
-import Top_select from "../../newcomp/global_select_que";
+// import Top_select from "../../newcomp/global_select_que";
+import Top_select from "../../newcomp/global_select_que_change1";
+
 import FullFeaturedCrudGrid from "../../newcomp/editmode_edit";
 import AuthCheck from "../../newcomp/login_auth-check";
 export default function Home() {
@@ -66,7 +68,7 @@ export default function Home() {
           
 
           {/* 메인: 선택지 , 차트내용 등 */}
-          <div id='main_frame' className='visualize_div'>
+          <div id='data_check_model_main_frame' className='visualize_div'>
             <AuthCheck>
             <div>
               <div id='rec'>
@@ -74,7 +76,7 @@ export default function Home() {
               </div>
 
 
-              <div id='csvview2' > 
+              <div id='data_check_model_table' > 
                   {/* {csvstatus && (
                       <DynamicTable data={receivedData2}/>
                   )} */}

@@ -5,7 +5,8 @@ import Button from '@mui/material/Button';
 import BasicModal from "../../newcomp/global_modal";
 import CircularIndeterminate from "../../newcomp/global_spinner";
 import Side_bar from "../../newcomp/global_side_bar";
-import Top_select from "../../newcomp/global_select_que_upload";
+// import Top_select from "../../newcomp/global_select_que_upload";
+import Top_select from "../../newcomp/global_select_que_upload_change1";
 import AuthCheck from "../../newcomp/login_auth-check";
 
 export default function Home() {
@@ -171,7 +172,7 @@ export default function Home() {
                             flexDirection: 'column',
                             alignItems: 'center',
                             height: '300px',
-                            marginTop: '20px'
+                            marginTop: '0px'
                         }}
                     >
                       {/* 1번 선택 , 2번 미선택 */}

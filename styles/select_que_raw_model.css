@@ -1,0 +1,113 @@
+#blank_raw{
+    height:44px;
+}
+
+#select_que_raw_outline{
+    /* border : 1px red solid; */
+    display: flex;
+    width:100%;
+
+}
+
+#select_que_raw_slect{
+    /* border: 3px blue solid; */
+    width:76%;
+    margin:10px;
+}
+
+#select_que_raw_select_loaction{
+    /* border : 3px red solid; */
+    margin:10px;
+    width:8%;
+}
+#select_que_raw_model_select_outline1{
+    /* border: 5px purple solid; */
+    padding: 0px;
+    display: flex;
+    width: 16%;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+#select_que_raw_model_select_outline2{
+    display : flex;
+    /* border :3px red solid; */
+    /* overflow: hidden; */
+    margin:10px;
+    width: 100%;
+
+}
+.select_que_raw_model_select{
+    /* border: 1px red solid; */
+    
+    /* width: 100%; */
+
+}
+
+#select_que_raw_model_btn{
+    /* border : 3px red solid; */
+    margin-left:10px;
+    width:80%;
+    height: 100%;
+    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 말줄임표로 표시 */
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+    /* margin:10px; */
+}
+
+#select_que_raw_select_ans{
+    /* border:1px red solid; */
+    margin:10px;
+}
+    
+
+/* rawmain */
+#data_check_raw_main_frame{
+    /* border:1px red solid; */
+    margin:10px;
+
+}
+#data_check_raw_table{
+    /* border:1px red solid; */
+}
+
+#outter_frame2{
+    padding-top:0px;
+    margin-left:60px;
+    width:96%;
+    margin-top:0px;
+    padding-bottom: 0px;
+}
+
+
+/* modelmain */
+#data_check_model_main_frame{
+    margin:10px;
+}
+
+/* slsect model */
+#select_que_model_btn_outline{
+    /* border:1px red solid; */
+    /* margin-top:3%; */
+    margin:10px;
+    /* width:100%; */
+    height:73%;
+    overflow: hidden;
+    /* 텍스트가 넘칠 경우 말줄임표로 표시 */
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+
+}
+#select_que_model_visual_btn{
+    height: 100%;
+    /* border:1px red solid; */
+    /* width:48%; */
+    /* text-overflow: ellipsis;  */
+
+}
+#select_que_model_visual_net{
+    /* border:1px red solid; */
+    margin-left:5px;
+    /* width:48%; */
+    height: 100%;
+    /* text-overflow: ellipsis; */
+
+}

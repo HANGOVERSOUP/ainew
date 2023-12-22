@@ -252,7 +252,7 @@ export default function FullFeaturedCrudGrid({file ,fileque}) {
       <Box
         sx={{
           height: 660,
-          width: '99%',
+          width: '100%',
           '& .actions': {
             color: 'text.secondary',
           },

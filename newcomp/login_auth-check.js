@@ -24,7 +24,7 @@ const AuthCheck = ({children}) => {
 
     if (!isAuthenticated) {
       // console.log("redirect2");
-      router.replace('http://115.68.193.117:4000/');
+      router.replace('http://115.68.193.117:4000/new/root');
       sessionStorage.setItem('intendedRoute', router.asPath); // Change localStorage to sessionStorage here
     }
   }, [router]);
